@@ -79,35 +79,90 @@
   }
 
   /* ---------- Hero ---------- */
+  /* ---------- Hero (streetwear JP redesign) ---------- */
   .hero{
     position:relative;
-    padding:64px 24px 40px;
-    text-align:center;
+    padding:0;
     border-bottom:1px solid var(--line);
     overflow:hidden;
+    background:#000;
   }
-  .hero::before{
+  .hero-inner{
+    position:relative;
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    min-height:560px;
+  }
+  .hero-art{
+    position:relative;
+    overflow:hidden;
+    background:#0a0a0a;
+  }
+  .hero-art svg{
+    position:absolute;inset:0;width:100%;height:100%;
+  }
+  .hero-art::after{
     content:"";position:absolute;inset:0;
-    background:radial-gradient(ellipse at 50% 0%, var(--accent-soft) 0%, transparent 60%);
-    opacity:0.6;pointer-events:none;
+    background:linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 35%);
   }
-  .hero-logo{height:64px;width:auto;margin-bottom:18px;position:relative;}
-  .hero h1{
+  .hero-content{
+    position:relative;display:flex;flex-direction:column;justify-content:center;
+    padding:60px 32px 60px 64px;
+    z-index:2;
+  }
+  .hero-vertical{
+    position:absolute;left:18px;top:0;bottom:0;
+    display:flex;align-items:center;
+    writing-mode:vertical-rl;
+    font-size:10px;letter-spacing:0.25em;color:var(--ink-dim);
+    text-transform:uppercase;
+  }
+  .hero-corner{
+    position:absolute;color:#3a3a3a;font-size:18px;line-height:1;font-weight:300;
+  }
+  .hero-corner.tl{top:18px;left:18px;}
+  .hero-corner.tr{top:18px;right:18px;}
+  .hero-corner.bl{bottom:18px;left:18px;}
+  .hero-jp{
+    font-size:13px;color:var(--accent);letter-spacing:0.1em;margin-bottom:14px;
+  }
+  .hero-content h1{
     font-family:'Bebas Neue';
-    font-size:clamp(40px,9vw,84px);
-    line-height:0.95;
-    letter-spacing:0.02em;
-    position:relative;
+    font-size:clamp(48px,7.5vw,92px);
+    line-height:0.92;letter-spacing:0.01em;color:var(--ink);
   }
-  .hero p{
-    margin-top:14px;color:var(--ink-dim);font-size:14px;
-    letter-spacing:0.12em;text-transform:uppercase;
-    position:relative;
+  .hero-content .eyebrow{
+    display:inline-block;margin-top:18px;
+    font-size:11px;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;
   }
-  .hero .eyebrow{
-    display:inline-block;margin-bottom:10px;
-    font-size:11px;letter-spacing:0.2em;text-transform:uppercase;
-    color:var(--accent);position:relative;
+  .hero-content p.tagline{
+    margin-top:8px;color:var(--ink-dim);font-size:13px;
+    letter-spacing:0.1em;text-transform:uppercase;
+  }
+  .hero-barcode{
+    margin-top:28px;display:flex;align-items:center;gap:10px;
+  }
+  .hero-barcode svg{height:32px;}
+  .hero-nav{
+    position:absolute;top:22px;right:32px;z-index:3;
+    display:flex;align-items:center;gap:28px;
+    font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-dim);
+  }
+  .hero-nav span{color:var(--ink);}
+  .hero-nav .globe{width:18px;height:18px;color:var(--ink-dim);}
+  .hero-kanji-corner{
+    position:absolute;bottom:24px;right:28px;z-index:3;
+    writing-mode:vertical-rl;color:var(--accent);font-size:13px;letter-spacing:0.2em;
+  }
+
+  @media (max-width:760px){
+    .hero-inner{grid-template-columns:1fr;min-height:0;}
+    .hero-art{height:280px;order:1;}
+    .hero-content{order:2;padding:40px 24px 36px 52px;}
+    .hero-nav{position:static;justify-content:flex-end;padding:14px 16px 0;}
+    .hero-kanji-corner{display:none;}
+    .hero-vertical{font-size:9px;}
   }
 
   /* ---------- Grid ---------- */
@@ -152,6 +207,25 @@
     font-size:12.5px;color:var(--ink-dim);line-height:1.5;
     flex:1;
   }
+  .size-guide-link{
+    align-self:flex-start;
+    font-size:11px;letter-spacing:0.04em;text-transform:uppercase;font-weight:600;
+    color:var(--accent);text-decoration:underline;text-underline-offset:3px;
+    margin-top:-4px;
+  }
+  .size-guide-link:hover{color:#fff;}
+  .size-table{
+    width:100%;border-collapse:collapse;margin:6px 0 4px;font-size:13px;
+  }
+  .size-table th{
+    text-align:left;color:var(--ink-dim);font-size:10px;letter-spacing:0.08em;
+    text-transform:uppercase;padding:8px 6px;border-bottom:1px solid var(--card-border);
+  }
+  .size-table td{
+    padding:10px 6px;border-bottom:1px solid var(--card-border);
+    font-family:'Bebas Neue';letter-spacing:0.02em;font-size:15px;
+  }
+  .size-table tr:last-child td{border-bottom:none;}
   .card-foot{
     display:flex;align-items:center;justify-content:space-between;
     margin-top:4px;
@@ -437,6 +511,13 @@ const DEFAULT_PRODUCTS = [
 const DEFAULT_CATEGORIES = ["Polos", "Zapatillas", "Accesorios"];
 const CATEGORIES_KEY = "mood_categories_v1";
 
+const POLO_SIZE_GUIDE = [
+  { talla: "SMALL",   largo: 68, ancho: 54, manga: 38 },
+  { talla: "MEDIUM",  largo: 70, ancho: 56, manga: 40 },
+  { talla: "LARGE",   largo: 74, ancho: 58, manga: 42 },
+  { talla: "X-LARGE", largo: 76, ancho: 61, manga: 45 }
+];
+
 let state = {
   products: null,
   categories: null,
@@ -459,6 +540,74 @@ function showToast(msg){
 
 function uid(){
   return "p" + Math.random().toString(36).slice(2,9);
+}
+
+function formatPrice(price){
+  const num = Number(price) || 0;
+  // Muestra decimales solo si no son ",00" (ej: 89 -> "89", 89.9 -> "89.90")
+  return num % 1 === 0 ? num.toFixed(0) : num.toFixed(2);
+}
+
+function renderBarcodeSvg(){
+  // Código de barras puramente decorativo (no codifica datos reales)
+  const widths = [2,1,3,1,1,2,3,1,2,1,1,3,2,1,1,2,3,1,2,2,1,3,1,2];
+  let x = 0;
+  const bars = widths.map((w, i) => {
+    const bar = i % 2 === 0
+      ? `<rect x="${x}" y="0" width="${w}" height="32" fill="currentColor"/>`
+      : "";
+    x += w + 1;
+    return bar;
+  }).join("");
+  return `<svg viewBox="0 0 ${x} 32" style="color:var(--ink-dim);height:28px;width:auto;">${bars}</svg>
+    <span style="font-size:10px;letter-spacing:0.1em;color:var(--ink-dim);">MOOD-2024-0001</span>`;
+}
+
+function renderHalftoneEyeSvg(){
+  return `
+  <svg viewBox="0 0 600 560" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="eyeGlow" cx="50%" cy="50%" r="60%">
+        <stop offset="0%" stop-color="#e8197f" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+      </radialGradient>
+      <pattern id="halftoneDots" width="9" height="9" patternUnits="userSpaceOnUse">
+        <circle cx="4.5" cy="4.5" r="1.6" fill="#e8e6df" opacity="0.5"/>
+      </pattern>
+      <radialGradient id="irisGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#050505"/>
+        <stop offset="60%" stop-color="#1a1a1a"/>
+        <stop offset="100%" stop-color="#050505"/>
+      </radialGradient>
+      <mask id="eyeMask">
+        <rect width="600" height="560" fill="black"/>
+        <ellipse cx="320" cy="290" rx="270" ry="230" fill="white"/>
+      </mask>
+    </defs>
+
+    <rect width="600" height="560" fill="#050505"/>
+    <rect width="600" height="560" fill="url(#eyeGlow)"/>
+
+    <!-- Eyebrow / lid shading -->
+    <path d="M40,180 Q300,40 600,160 L600,260 Q320,150 40,260 Z" fill="#111" opacity="0.9"/>
+
+    <!-- Eye shape -->
+    <path d="M30,300 Q320,150 600,290 Q320,420 30,300 Z" fill="#0c0c0c" stroke="#2a2a2a" stroke-width="2"/>
+
+    <!-- Iris -->
+    <circle cx="330" cy="300" r="95" fill="url(#irisGrad)" stroke="#e8197f" stroke-width="1.5" opacity="0.9"/>
+    <circle cx="330" cy="300" r="40" fill="#000"/>
+    <circle cx="312" cy="282" r="10" fill="#fff" opacity="0.8"/>
+
+    <!-- Halftone overlay -->
+    <rect width="600" height="560" fill="url(#halftoneDots)" mask="url(#eyeMask)" opacity="0.4"/>
+
+    <!-- Grain lines -->
+    <g stroke="#1c1c1c" stroke-width="1" opacity="0.5">
+      <line x1="0" y1="60" x2="600" y2="60"/>
+      <line x1="0" y1="500" x2="600" y2="500"/>
+    </g>
+  </svg>`;
 }
 
 function resolveImage(imageValue){
@@ -621,7 +770,7 @@ const ICONS = {
 function buildWhatsappLink(product, customMsg){
   const base = customMsg && customMsg.trim().length
     ? customMsg
-    : `Hola! Me interesa el producto "${product.name}" (S/ ${product.price}). ¿Está disponible?`;
+    : `Hola! Me interesa el producto "${product.name}" (S/ ${formatPrice(product.price)}). ¿Está disponible?`;
   const clean = (state.whatsapp || "").replace(/[^0-9]/g,"");
   return `https://wa.me/${clean}?text=${encodeURIComponent(base)}`;
 }
@@ -647,8 +796,9 @@ function renderClientView(){
       <div class="card-body">
         <div class="card-name">${escapeHtml(p.name)}</div>
         <div class="card-desc">${escapeHtml(p.desc || '')}</div>
+        ${(p.category || 'Polos') === 'Polos' ? `<button class="size-guide-link" data-action="size-guide" data-id="${p.id}">Ver guía de tallas</button>` : ''}
         <div class="card-foot">
-          <span class="card-price">S/ ${Number(p.price).toFixed(0)}</span>
+          <span class="card-price">S/ ${formatPrice(p.price)}</span>
           ${p.stock
             ? `<button class="btn-buy" data-action="interest" data-id="${p.id}">${ICONS.whatsapp} Consultar</button>`
             : `<span class="btn-buy disabled">No disponible</span>`}
@@ -677,10 +827,36 @@ function renderClientView(){
     </div>
 
     <div class="hero">
-      <img class="hero-logo" src="${IMAGES.logo}" alt="MOOD">
-      <div class="eyebrow">Colección completa · Edición limitada</div>
-      <h1 class="display">VISTE TU<br>MOOD</h1>
-      <p>Minimal · Oversize · Statement pieces</p>
+      <div class="hero-inner">
+        <div class="hero-nav">
+          <span>Colección</span>
+          <span>Edición Limitada</span>
+          <svg class="globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><line x1="3" y1="12" x2="21" y2="12"/></svg>
+        </div>
+
+        <div class="hero-content">
+          <span class="hero-corner tl">+</span>
+          <div class="hero-vertical">MOOD EST. 2024</div>
+
+          <img src="${IMAGES.logo}" alt="MOOD" style="height:46px;width:auto;margin-bottom:18px;align-self:flex-start;">
+          <div class="hero-jp">ムードを着る</div>
+          <h1 class="display">VISTE TU<br>MOOD</h1>
+          <span class="eyebrow">Colección completa · Edición limitada</span>
+          <p class="tagline">Minimal · Oversize · Statement pieces</p>
+
+          <div class="hero-barcode">
+            ${renderBarcodeSvg()}
+          </div>
+
+          <span class="hero-corner bl">+</span>
+        </div>
+
+        <div class="hero-art">
+          ${renderHalftoneEyeSvg()}
+        </div>
+
+        <div class="hero-kanji-corner">限定版</div>
+      </div>
     </div>
 
     <div class="wrap">
@@ -710,6 +886,32 @@ function renderClientView(){
         </div>
       </div>
     </div>
+
+    <div class="overlay" id="sizeGuideOverlay">
+      <div class="modal">
+        <button class="modal-close" id="closeSizeGuide">${ICONS.close}</button>
+        <h2 class="display">Guía de tallas — Polos</h2>
+        <p class="modal-sub">Medidas en centímetros. Polos oversize.</p>
+        <table class="size-table">
+          <thead>
+            <tr><th>Talla</th><th>Largo</th><th>Ancho</th><th>Manga</th></tr>
+          </thead>
+          <tbody>
+            ${POLO_SIZE_GUIDE.map(row => `
+              <tr>
+                <td>${row.talla}</td>
+                <td>${row.largo}</td>
+                <td>${row.ancho}</td>
+                <td>${row.manga}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+        <div class="modal-actions">
+          <button class="btn-secondary" id="closeSizeGuide2">Cerrar</button>
+        </div>
+      </div>
+    </div>
   `;
 }
 
@@ -734,7 +936,7 @@ function bindClientEvents(){
       const id = btn.getAttribute("data-id");
       currentInterestProduct = state.products.find(p=>p.id===id);
       if(!currentInterestProduct) return;
-      const defaultMsg = `Hola! Me interesa el producto "${currentInterestProduct.name}" (S/ ${currentInterestProduct.price}). ¿Está disponible?`;
+      const defaultMsg = `Hola! Me interesa el producto "${currentInterestProduct.name}" (S/ ${formatPrice(currentInterestProduct.price)}). ¿Está disponible?`;
       document.getElementById("interestMsg").value = defaultMsg;
       document.getElementById("sendInterest").href = buildWhatsappLink(currentInterestProduct, defaultMsg);
       document.getElementById("interestOverlay").classList.add("show");
@@ -762,6 +964,17 @@ function bindClientEvents(){
       setTimeout(()=> overlay.classList.remove("show"), 300);
     });
   }
+
+  // Size guide modal
+  const sizeGuideOverlay = document.getElementById("sizeGuideOverlay");
+  document.querySelectorAll('[data-action="size-guide"]').forEach(btn=>{
+    btn.addEventListener("click", ()=> sizeGuideOverlay.classList.add("show"));
+  });
+  const closeSizeGuide = ()=> sizeGuideOverlay.classList.remove("show");
+  const closeSizeGuideBtn = document.getElementById("closeSizeGuide");
+  const closeSizeGuideBtn2 = document.getElementById("closeSizeGuide2");
+  [closeSizeGuideBtn, closeSizeGuideBtn2].forEach(b=> b && b.addEventListener("click", closeSizeGuide));
+  sizeGuideOverlay && sizeGuideOverlay.addEventListener("click", (e)=>{ if(e.target === sizeGuideOverlay) closeSizeGuide(); });
 }
 
 /* ============================================================
@@ -825,7 +1038,7 @@ function renderOwnerDashboard(){
         <div class="card-name">${escapeHtml(p.name)}</div>
         <div class="card-desc">${escapeHtml(p.desc || '')}</div>
         <div class="card-foot">
-          <span class="card-price">S/ ${Number(p.price).toFixed(0)}</span>
+          <span class="card-price">S/ ${formatPrice(p.price)}</span>
         </div>
         <div class="owner-controls">
           <button class="icon-btn" data-action="edit" data-id="${p.id}" title="Editar">${ICONS.edit}</button>
@@ -917,7 +1130,7 @@ function renderProductModal(){
         <div class="field-row">
           <div class="field">
             <label>Precio (S/)</label>
-            <input type="number" id="fieldPrice" placeholder="89" min="0" step="1">
+            <input type="number" id="fieldPrice" placeholder="89.90" min="0" step="0.10">
           </div>
           <div class="field">
             <label>Categoría</label>
