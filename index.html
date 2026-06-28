@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js" crossorigin="anonymous"></script>
 <style>
   :root{
     --bg:#0a0a0a;
@@ -38,6 +39,41 @@
   button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
   input,textarea{font-family:inherit;color:inherit;background:none;}
 
+  /* ---------- Announcement bar ---------- */
+  .announcement-bar{
+    background:#000000;
+    color:#fff;
+    overflow:hidden;
+    white-space:nowrap;
+    padding:9px 0;
+    position:relative;
+    border-bottom:1px solid #262626;
+  }
+  .announcement-track{
+    display:inline-flex;
+    animation:announcementScroll 18s linear infinite;
+  }
+  .announcement-track span{
+    display:inline-block;
+    padding:0 32px;
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+  }
+  .announcement-track img.emoji{
+    height:1.1em;width:1.1em;
+    vertical-align:-0.18em;
+    margin:0 0.05em;
+  }
+  @keyframes announcementScroll{
+    from{ transform:translateX(0); }
+    to{ transform:translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .announcement-track{animation:none;}
+  }
+
   /* ---------- Top bar ---------- */
   .topbar{
     position:sticky;top:0;z-index:50;
@@ -48,7 +84,7 @@
     border-bottom:1px solid var(--line);
   }
   .brand{display:flex;align-items:center;gap:10px;}
-  .brand img{height:30px;width:auto;display:block;}
+  .brand img{height:42px;width:auto;display:block;}
   .brand-name{font-family:'Bebas Neue';font-size:22px;letter-spacing:0.12em;}
   .topbar-right{display:flex;align-items:center;gap:14px;}
   .pill{
@@ -485,6 +521,7 @@ const OWNER_PASSWORD = "mood2026";
 const STORAGE_KEY = "mood_catalog_v1";
 const WHATSAPP_NUMBER_KEY = "mood_whatsapp_v1";
 const HERO_BG_KEY = "mood_hero_bg_v1";
+const ANNOUNCEMENT_KEY = "mood_announcement_v1";
 
 /* ====== CONFIGURACIÓN DE FIREBASE ======
    Reemplaza estos valores con los de TU proyecto de Firebase.
@@ -582,6 +619,7 @@ let state = {
   activeCategory: "Todos",
   whatsapp: "51999999999",
   heroBgImage: null,
+  announcement: "🔥 ¡NUEVA COLECCIÓN MOOD YA DISPONIBLE! — 📦 ENVÍOS A TODO IQUITOS — 🛍️",
   isOwner: false,
   authed: false,
   view: "client", // client | owner
@@ -762,6 +800,11 @@ async function loadState(){
       const bgVal = bgSnap.val();
       if(bgVal) state.heroBgImage = bgVal;
     }catch(e){ /* keep default */ }
+    try{
+      const annSnap = await db.ref(ANNOUNCEMENT_KEY).once("value");
+      const annVal = annSnap.val();
+      if(annVal !== null && annVal !== undefined) state.announcement = annVal;
+    }catch(e){ /* keep default */ }
   }else{
     // Fallback local: solo funciona en este mismo navegador/dispositivo
     try{
@@ -783,6 +826,10 @@ async function loadState(){
     try{
       const localBg = localStorage.getItem(HERO_BG_KEY);
       if(localBg) state.heroBgImage = JSON.parse(localBg);
+    }catch(e){ /* keep default */ }
+    try{
+      const localAnn = localStorage.getItem(ANNOUNCEMENT_KEY);
+      if(localAnn !== null) state.announcement = JSON.parse(localAnn);
     }catch(e){ /* keep default */ }
   }
   state.loading = false;
@@ -869,6 +916,22 @@ async function removeHeroBg(){
   }
 }
 
+async function saveAnnouncement(text){
+  state.announcement = text;
+  if(firebaseReady){
+    try{
+      await db.ref(ANNOUNCEMENT_KEY).set(text);
+    }catch(e){
+      console.error("Error guardando anuncio:", e);
+      showToast("No se pudo guardar el anuncio.");
+    }
+  }else{
+    try{
+      localStorage.setItem(ANNOUNCEMENT_KEY, JSON.stringify(text));
+    }catch(e){}
+  }
+}
+
 /* ---------------- Routing-ish ---------------- */
 function getRouteFromHash(){
   return window.location.hash === "#owner" ? "owner" : "client";
@@ -940,6 +1003,14 @@ function renderClientView(){
   `).join("");
 
   return `
+    ${state.announcement ? `
+    <div class="announcement-bar">
+      <div class="announcement-track">
+        <span>${escapeHtml(state.announcement)}</span>
+        <span>${escapeHtml(state.announcement)}</span>
+      </div>
+    </div>` : ''}
+
     <div class="topbar">
       <div class="brand">
         <img src="${IMAGES.logo}" alt="MOOD">
@@ -967,7 +1038,7 @@ function renderClientView(){
         <span class="hero-corner br">+</span>
         <div class="hero-vertical">MOOD EST. 2024</div>
 
-        <img src="${IMAGES.logo}" alt="MOOD" style="height:44px;width:auto;margin-bottom:18px;align-self:flex-start;">
+        <img src="${IMAGES.logo}" alt="MOOD" style="height:84px;width:auto;margin-bottom:20px;align-self:flex-start;">
         <div class="hero-jp">ムードを着る</div>
         <h1 class="display">VISTE TU<br>MOOD</h1>
         <span class="eyebrow">Colección completa · Edición limitada</span>
@@ -1205,6 +1276,7 @@ function renderOwnerDashboard(){
         <span class="pill active" style="margin-left:6px;">Modo dueño</span>
       </div>
       <div class="topbar-right">
+        <button class="pill" id="manageAnnouncementBtn">${ICONS.settings} Anuncio</button>
         <button class="pill" id="manageHeroBgBtn">${ICONS.settings} Encabezado</button>
         <button class="pill" id="manageCategoriesBtn">${ICONS.settings} Categorías</button>
         <button class="pill" id="openSettings">${ICONS.settings} WhatsApp</button>
@@ -1237,6 +1309,7 @@ function renderOwnerDashboard(){
     ${renderSettingsModal()}
     ${renderCategoriesModal()}
     ${renderHeroBgModal()}
+    ${renderAnnouncementModal()}
   `;
 }
 
@@ -1342,6 +1415,26 @@ function renderHeroBgModal(){
 
         <div class="modal-actions">
           ${state.heroBgImage ? `<button class="btn-secondary" id="removeHeroBgBtn">Quitar imagen</button>` : `<button class="btn-secondary" id="closeHeroBgModal2">Cerrar</button>`}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderAnnouncementModal(){
+  return `
+    <div class="overlay" id="announcementOverlay">
+      <div class="modal">
+        <button class="modal-close" id="closeAnnouncementModal">${ICONS.close}</button>
+        <h2 class="display">Cinta de anuncio</h2>
+        <p class="modal-sub">Este mensaje se mueve en una cinta arriba del catálogo, encima del logo. Útil para promociones, envíos o avisos. Déjalo vacío para ocultarlo por completo.</p>
+        <div class="field">
+          <label>Texto del anuncio</label>
+          <textarea id="fieldAnnouncement" rows="3" placeholder="Ej: 🔥 Nueva colección ya disponible — Envíos a todo Iquitos">${escapeHtml(state.announcement || '')}</textarea>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-secondary" id="cancelAnnouncementModal">Cancelar</button>
+          <button class="btn-primary" id="saveAnnouncementBtn">Guardar</button>
         </div>
       </div>
     </div>
@@ -1606,6 +1699,23 @@ function bindOwnerDashboardEvents(){
       }
     });
   }
+
+  // Announcement modal
+  const announcementOverlay = document.getElementById("announcementOverlay");
+  document.getElementById("manageAnnouncementBtn").addEventListener("click", ()=>{
+    announcementOverlay.classList.add("show");
+  });
+  const closeAnnouncement = ()=> announcementOverlay.classList.remove("show");
+  document.getElementById("closeAnnouncementModal").addEventListener("click", closeAnnouncement);
+  document.getElementById("cancelAnnouncementModal").addEventListener("click", closeAnnouncement);
+  announcementOverlay.addEventListener("click", (e)=>{ if(e.target===announcementOverlay) closeAnnouncement(); });
+
+  document.getElementById("saveAnnouncementBtn").addEventListener("click", async ()=>{
+    const text = document.getElementById("fieldAnnouncement").value.trim();
+    await saveAnnouncement(text);
+    closeAnnouncement();
+    showToast(text ? "Anuncio actualizado" : "Anuncio ocultado");
+  });
 }
 
 let uploadedImageDataUrl = null;
@@ -1686,6 +1796,13 @@ function render(){
     root.innerHTML = renderClientView();
     bindClientEvents();
   }
+
+  // Convierte emojis de texto a imágenes Twemoji para que se vean igual en todos los dispositivos
+  if(window.twemoji){
+    try{
+      window.twemoji.parse(root, { folder: "svg", ext: ".svg" });
+    }catch(e){ /* si falla, los emojis quedan como texto del sistema */ }
+  }
 }
 
 /* ---------------- Init ---------------- */
@@ -1725,6 +1842,14 @@ function render(){
       if(getRouteFromHash() === "owner" && state.authed) return;
       if(fresh !== state.heroBgImage){
         state.heroBgImage = fresh || null;
+        render();
+      }
+    });
+    db.ref(ANNOUNCEMENT_KEY).on("value", (snap)=>{
+      const fresh = snap.val();
+      if(getRouteFromHash() === "owner" && state.authed) return;
+      if(fresh !== null && fresh !== undefined && fresh !== state.announcement){
+        state.announcement = fresh;
         render();
       }
     });
