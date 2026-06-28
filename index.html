@@ -78,91 +78,148 @@
     border-radius:2px;margin-bottom:8px;font-size:13px;
   }
 
+  .hero-bg-preview-wrap{
+    width:100%;aspect-ratio:16/7;border-radius:2px;overflow:hidden;
+    background:var(--bg-soft);border:1px solid var(--card-border);
+    margin-bottom:6px;display:flex;align-items:center;justify-content:center;
+  }
+  .hero-bg-preview{width:100%;height:100%;object-fit:cover;}
+  .hero-bg-preview-empty{font-size:12px;color:var(--ink-dim);text-align:center;padding:20px;}
+
   /* ---------- Hero ---------- */
-  /* ---------- Hero (streetwear JP redesign) ---------- */
+  /* ---------- Hero (streetwear redesign v2) ---------- */
   .hero{
     position:relative;
     padding:0;
     border-bottom:1px solid var(--line);
     overflow:hidden;
-    background:#000;
+    background:#070707;
+    min-height:600px;
   }
-  .hero-inner{
-    position:relative;
-    display:grid;
-    grid-template-columns:1.1fr 1fr;
-    min-height:560px;
-  }
-  .hero-art{
-    position:relative;
-    overflow:hidden;
-    background:#0a0a0a;
-  }
-  .hero-art svg{
+  .hero-bg{
     position:absolute;inset:0;width:100%;height:100%;
   }
-  .hero-art::after{
-    content:"";position:absolute;inset:0;
-    background:linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 35%);
+  .hero-bg-image{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;object-position:center;
   }
-  .hero-content{
-    position:relative;display:flex;flex-direction:column;justify-content:center;
-    padding:60px 32px 60px 64px;
-    z-index:2;
+  .hero-bg-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(90deg, rgba(7,7,7,0.92) 0%, rgba(7,7,7,0.55) 40%, rgba(7,7,7,0.25) 70%, rgba(7,7,7,0.45) 100%),
+               linear-gradient(180deg, rgba(7,7,7,0.3) 0%, rgba(7,7,7,0) 18%, rgba(7,7,7,0) 75%, rgba(7,7,7,0.55) 100%);
+  }
+  .hero-nav{
+    position:relative;z-index:5;
+    display:flex;align-items:center;justify-content:flex-end;gap:32px;
+    padding:24px 32px 0;
+    font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-dim);
+  }
+  .hero-nav span{color:var(--ink);}
+  .hero-nav .globe{width:18px;height:18px;color:var(--ink-dim);}
+
+  .hero-stage{
+    position:relative;z-index:2;
+    padding:56px 32px 40px 64px;
+    min-height:520px;
+    display:flex;flex-direction:column;justify-content:center;
   }
   .hero-vertical{
-    position:absolute;left:18px;top:0;bottom:0;
+    position:absolute;left:18px;top:90px;bottom:90px;
     display:flex;align-items:center;
     writing-mode:vertical-rl;
     font-size:10px;letter-spacing:0.25em;color:var(--ink-dim);
     text-transform:uppercase;
   }
   .hero-corner{
-    position:absolute;color:#3a3a3a;font-size:18px;line-height:1;font-weight:300;
+    position:absolute;color:#4a4a4a;font-size:16px;line-height:1;font-weight:300;z-index:4;
   }
-  .hero-corner.tl{top:18px;left:18px;}
-  .hero-corner.tr{top:18px;right:18px;}
-  .hero-corner.bl{bottom:18px;left:18px;}
+  .hero-corner.tl{top:96px;left:60px;}
+  .hero-corner.tr{top:96px;right:5%;}
+  .hero-corner.bl{bottom:96px;left:34px;}
+  .hero-corner.br{bottom:130px;right:36%;}
+  .hero-crosshair{
+    position:absolute;color:#4a4a4a;width:22px;height:22px;z-index:4;
+  }
+  .hero-crosshair.c1{top:160px;left:34px;}
+  .hero-crosshair.c2{bottom:170px;right:30%;}
+  .hero-crosshair.c3{top:420px;right:11%;}
+
   .hero-jp{
-    font-size:13px;color:var(--accent);letter-spacing:0.1em;margin-bottom:14px;
+    font-size:13px;color:var(--accent);letter-spacing:0.12em;margin-bottom:16px;
   }
-  .hero-content h1{
+  .hero-stage h1{
     font-family:'Bebas Neue';
-    font-size:clamp(48px,7.5vw,92px);
-    line-height:0.92;letter-spacing:0.01em;color:var(--ink);
+    font-size:clamp(52px,7.2vw,96px);
+    line-height:0.92;letter-spacing:0.005em;color:var(--ink);
   }
-  .hero-content .eyebrow{
-    display:inline-block;margin-top:18px;
-    font-size:11px;letter-spacing:0.18em;text-transform:uppercase;
+  .hero-stage .eyebrow{
+    display:inline-block;margin-top:20px;
+    font-size:12px;letter-spacing:0.16em;text-transform:uppercase;
     color:var(--accent);font-weight:700;
   }
-  .hero-content p.tagline{
+  .hero-stage p.tagline{
     margin-top:8px;color:var(--ink-dim);font-size:13px;
     letter-spacing:0.1em;text-transform:uppercase;
   }
-  .hero-barcode{
-    margin-top:28px;display:flex;align-items:center;gap:10px;
+
+  .hero-meta-tr{
+    position:absolute;top:96px;right:5%;z-index:4;
+    font-size:11px;letter-spacing:0.1em;line-height:1.7;color:var(--ink-dim);
+    text-transform:uppercase;text-align:left;
   }
-  .hero-barcode svg{height:32px;}
-  .hero-nav{
-    position:absolute;top:22px;right:32px;z-index:3;
-    display:flex;align-items:center;gap:28px;
-    font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-dim);
-  }
-  .hero-nav span{color:var(--ink);}
-  .hero-nav .globe{width:18px;height:18px;color:var(--ink-dim);}
-  .hero-kanji-corner{
-    position:absolute;bottom:24px;right:28px;z-index:3;
-    writing-mode:vertical-rl;color:var(--accent);font-size:13px;letter-spacing:0.2em;
+  .hero-meta-tr strong{color:var(--ink);display:block;}
+
+  .hero-kanji-right{
+    position:absolute;bottom:120px;right:5%;z-index:4;
+    writing-mode:vertical-rl;color:var(--accent);font-size:14px;letter-spacing:0.25em;font-weight:600;
   }
 
+  .hero-quote{
+    position:absolute;bottom:54px;right:34%;z-index:4;
+    font-size:11px;letter-spacing:0.08em;line-height:1.7;color:var(--ink-dim);
+    text-transform:uppercase;text-align:left;max-width:170px;
+  }
+
+  .hero-bottom-bar{
+    position:relative;z-index:3;
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+    padding:18px 32px 22px 64px;
+    border-top:1px solid #1c1c1c;
+  }
+  .hero-coords{
+    font-size:12px;letter-spacing:0.05em;color:var(--ink-dim);line-height:1.5;
+  }
+  .hero-culture{
+    display:flex;align-items:center;gap:14px;
+    font-size:11px;letter-spacing:0.04em;color:var(--ink-dim);line-height:1.5;
+    text-transform:uppercase;
+  }
+  .hero-culture svg{width:26px;height:26px;color:var(--ink-dim);flex-shrink:0;}
+  .hero-culture-divider{width:1px;height:28px;background:var(--line);}
+  .hero-worldwide-barcode{
+    display:flex;flex-direction:column;align-items:flex-end;gap:4px;
+  }
+  .hero-worldwide-barcode svg{height:26px;}
+  .hero-worldwide-barcode span{
+    font-size:9px;letter-spacing:0.18em;color:var(--ink-dim);
+  }
+
+  @media (max-width:900px){
+    .hero-meta-tr, .hero-quote, .hero-kanji-right, .hero-corner.br, .hero-crosshair.c2, .hero-crosshair.c3{display:none;}
+  }
   @media (max-width:760px){
-    .hero-inner{grid-template-columns:1fr;min-height:0;}
-    .hero-art{height:280px;order:1;}
-    .hero-content{order:2;padding:40px 24px 36px 52px;}
-    .hero-nav{position:static;justify-content:flex-end;padding:14px 16px 0;}
-    .hero-kanji-corner{display:none;}
-    .hero-vertical{font-size:9px;}
+    .hero{min-height:0;}
+    .hero-stage{padding:36px 24px 32px 52px;min-height:0;}
+    .hero-vertical{font-size:9px;top:60px;bottom:60px;}
+    .hero-corner.tl{top:64px;left:24px;}
+    .hero-corner.bl{bottom:20px;left:24px;display:none;}
+    .hero-crosshair.c1{top:120px;left:24px;}
+    .hero-nav{padding:16px 20px 0;gap:20px;}
+    .hero-bottom-bar{
+      flex-direction:column;align-items:flex-start;
+      padding:16px 20px;
+    }
+    .hero-worldwide-barcode{align-items:flex-start;}
   }
 
   /* ---------- Grid ---------- */
@@ -427,6 +484,7 @@ const IMAGES = {"logo": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQC
 const OWNER_PASSWORD = "mood2026";
 const STORAGE_KEY = "mood_catalog_v1";
 const WHATSAPP_NUMBER_KEY = "mood_whatsapp_v1";
+const HERO_BG_KEY = "mood_hero_bg_v1";
 
 /* ====== CONFIGURACIÓN DE FIREBASE ======
    Reemplaza estos valores con los de TU proyecto de Firebase.
@@ -523,6 +581,7 @@ let state = {
   categories: null,
   activeCategory: "Todos",
   whatsapp: "51999999999",
+  heroBgImage: null,
   isOwner: false,
   authed: false,
   view: "client", // client | owner
@@ -559,53 +618,74 @@ function renderBarcodeSvg(){
     x += w + 1;
     return bar;
   }).join("");
-  return `<svg viewBox="0 0 ${x} 32" style="color:var(--ink-dim);height:28px;width:auto;">${bars}</svg>
-    <span style="font-size:10px;letter-spacing:0.1em;color:var(--ink-dim);">MOOD-2024-0001</span>`;
+  return `<svg viewBox="0 0 ${x} 32" style="color:var(--ink-dim);height:28px;width:auto;">${bars}</svg>`;
 }
 
-function renderHalftoneEyeSvg(){
+function renderHeroBackgroundSvg(){
   return `
-  <svg viewBox="0 0 600 560" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 1600 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <radialGradient id="eyeGlow" cx="50%" cy="50%" r="60%">
-        <stop offset="0%" stop-color="#e8197f" stop-opacity="0.35"/>
-        <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+      <filter id="grainFilter">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="noise"/>
+        <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0"/>
+      </filter>
+      <linearGradient id="streakGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#e8197f" stop-opacity="0"/>
+        <stop offset="45%" stop-color="#e8197f" stop-opacity="0.55"/>
+        <stop offset="70%" stop-color="#ff4fa3" stop-opacity="0.85"/>
+        <stop offset="100%" stop-color="#ffd9ec" stop-opacity="0.95"/>
+      </linearGradient>
+      <radialGradient id="streakGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#e8197f" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="#e8197f" stop-opacity="0"/>
       </radialGradient>
-      <pattern id="halftoneDots" width="9" height="9" patternUnits="userSpaceOnUse">
-        <circle cx="4.5" cy="4.5" r="1.6" fill="#e8e6df" opacity="0.5"/>
-      </pattern>
-      <radialGradient id="irisGrad" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#050505"/>
-        <stop offset="60%" stop-color="#1a1a1a"/>
-        <stop offset="100%" stop-color="#050505"/>
-      </radialGradient>
-      <mask id="eyeMask">
-        <rect width="600" height="560" fill="black"/>
-        <ellipse cx="320" cy="290" rx="270" ry="230" fill="white"/>
-      </mask>
     </defs>
 
-    <rect width="600" height="560" fill="#050505"/>
-    <rect width="600" height="560" fill="url(#eyeGlow)"/>
+    <!-- Base -->
+    <rect width="1600" height="600" fill="#070707"/>
 
-    <!-- Eyebrow / lid shading -->
-    <path d="M40,180 Q300,40 600,160 L600,260 Q320,150 40,260 Z" fill="#111" opacity="0.9"/>
+    <!-- Faint coordinate grid -->
+    <g stroke="#1a1a1a" stroke-width="1" opacity="0.6">
+      <line x1="900" y1="0" x2="900" y2="600"/>
+      ${Array.from({length:7}).map((_,i)=>`<line x1="${950+i*100}" y1="0" x2="${950+i*100}" y2="600"/>`).join("")}
+    </g>
+    <g stroke="#1f1f1f" stroke-width="1" opacity="0.5" fill="none">
+      <circle cx="1250" cy="380" r="120"/>
+      <circle cx="1250" cy="380" r="220"/>
+      <circle cx="1250" cy="380" r="320"/>
+      <ellipse cx="1250" cy="380" rx="320" ry="90"/>
+    </g>
 
-    <!-- Eye shape -->
-    <path d="M30,300 Q320,150 600,290 Q320,420 30,300 Z" fill="#0c0c0c" stroke="#2a2a2a" stroke-width="2"/>
+    <!-- Abstract angular glyph (decorative, not a real character) -->
+    <g stroke="#222222" stroke-width="3" fill="none" opacity="0.8">
+      <path d="M870,140 L1010,140 L940,260 L1080,260"/>
+      <path d="M900,300 L1000,300 L950,420 L900,520"/>
+      <path d="M990,360 L1060,360 L1030,420"/>
+    </g>
 
-    <!-- Iris -->
-    <circle cx="330" cy="300" r="95" fill="url(#irisGrad)" stroke="#e8197f" stroke-width="1.5" opacity="0.9"/>
-    <circle cx="330" cy="300" r="40" fill="#000"/>
-    <circle cx="312" cy="282" r="10" fill="#fff" opacity="0.8"/>
+    <!-- Diagonal pink streak -->
+    <g opacity="0.85">
+      <rect x="950" y="-50" width="900" height="55" fill="url(#streakGrad)" transform="rotate(-22 1250 300)"/>
+      <ellipse cx="1230" cy="250" rx="200" ry="60" fill="url(#streakGlow)" transform="rotate(-22 1230 250)"/>
+    </g>
 
-    <!-- Halftone overlay -->
-    <rect width="600" height="560" fill="url(#halftoneDots)" mask="url(#eyeMask)" opacity="0.4"/>
+    <!-- Grain texture overlay -->
+    <rect width="1600" height="600" filter="url(#grainFilter)" opacity="0.5"/>
 
-    <!-- Grain lines -->
-    <g stroke="#1c1c1c" stroke-width="1" opacity="0.5">
-      <line x1="0" y1="60" x2="600" y2="60"/>
-      <line x1="0" y1="500" x2="600" y2="500"/>
+    <!-- Vignette to keep left side dark for text legibility -->
+    <defs>
+      <linearGradient id="leftFade" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#070707" stop-opacity="1"/>
+        <stop offset="38%" stop-color="#070707" stop-opacity="0.55"/>
+        <stop offset="60%" stop-color="#070707" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <rect width="1600" height="600" fill="url(#leftFade)"/>
+
+    <!-- Top/bottom subtle frame lines -->
+    <g stroke="#1c1c1c" stroke-width="1" opacity="0.7">
+      <line x1="0" y1="88" x2="1600" y2="88"/>
+      <line x1="0" y1="512" x2="1600" y2="512"/>
     </g>
   </svg>`;
 }
@@ -677,6 +757,11 @@ async function loadState(){
       const waVal = waSnap.val();
       if(waVal) state.whatsapp = waVal;
     }catch(e){ /* keep default */ }
+    try{
+      const bgSnap = await db.ref(HERO_BG_KEY).once("value");
+      const bgVal = bgSnap.val();
+      if(bgVal) state.heroBgImage = bgVal;
+    }catch(e){ /* keep default */ }
   }else{
     // Fallback local: solo funciona en este mismo navegador/dispositivo
     try{
@@ -694,6 +779,10 @@ async function loadState(){
     try{
       const localWa = localStorage.getItem(WHATSAPP_NUMBER_KEY);
       if(localWa) state.whatsapp = JSON.parse(localWa);
+    }catch(e){ /* keep default */ }
+    try{
+      const localBg = localStorage.getItem(HERO_BG_KEY);
+      if(localBg) state.heroBgImage = JSON.parse(localBg);
     }catch(e){ /* keep default */ }
   }
   state.loading = false;
@@ -743,6 +832,39 @@ async function saveWhatsapp(num){
   }else{
     try{
       localStorage.setItem(WHATSAPP_NUMBER_KEY, JSON.stringify(num));
+    }catch(e){}
+  }
+}
+
+async function saveHeroBg(dataUrl){
+  state.heroBgImage = dataUrl;
+  if(firebaseReady){
+    try{
+      await db.ref(HERO_BG_KEY).set(dataUrl);
+    }catch(e){
+      console.error("Error guardando imagen de fondo:", e);
+      showToast("No se pudo guardar la imagen. ¿Es muy pesada?");
+    }
+  }else{
+    try{
+      localStorage.setItem(HERO_BG_KEY, JSON.stringify(dataUrl));
+    }catch(e){
+      showToast("No se pudo guardar la imagen en este dispositivo.");
+    }
+  }
+}
+
+async function removeHeroBg(){
+  state.heroBgImage = null;
+  if(firebaseReady){
+    try{
+      await db.ref(HERO_BG_KEY).remove();
+    }catch(e){
+      console.error("Error eliminando imagen de fondo:", e);
+    }
+  }else{
+    try{
+      localStorage.removeItem(HERO_BG_KEY);
     }catch(e){}
   }
 }
@@ -827,35 +949,52 @@ function renderClientView(){
     </div>
 
     <div class="hero">
-      <div class="hero-inner">
-        <div class="hero-nav">
-          <span>Colección</span>
-          <span>Edición Limitada</span>
-          <svg class="globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><line x1="3" y1="12" x2="21" y2="12"/></svg>
+      <div class="hero-bg">
+        ${state.heroBgImage
+          ? `<img src="${state.heroBgImage}" alt="" class="hero-bg-image">`
+          : renderHeroBackgroundSvg()}
+        <div class="hero-bg-overlay"></div>
+      </div>
+
+      <div class="hero-nav">
+        <span>Colección</span>
+        <span>Edición Limitada</span>
+        <svg class="globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><line x1="3" y1="12" x2="21" y2="12"/></svg>
+      </div>
+
+      <div class="hero-stage">
+        <span class="hero-corner tl">+</span>
+        <span class="hero-corner br">+</span>
+        <div class="hero-vertical">MOOD EST. 2024</div>
+
+        <img src="${IMAGES.logo}" alt="MOOD" style="height:44px;width:auto;margin-bottom:18px;align-self:flex-start;">
+        <div class="hero-jp">ムードを着る</div>
+        <h1 class="display">VISTE TU<br>MOOD</h1>
+        <span class="eyebrow">Colección completa · Edición limitada</span>
+        <p class="tagline">Minimal · Oversize · Statement pieces</p>
+
+        <div class="hero-meta-tr">
+          <strong>MMXXIV</strong>
+          <span>Limited Edition</span>
+          <span>Worldwide</span>
         </div>
 
-        <div class="hero-content">
-          <span class="hero-corner tl">+</span>
-          <div class="hero-vertical">MOOD EST. 2024</div>
+        <div class="hero-kanji-right">限定版</div>
 
-          <img src="${IMAGES.logo}" alt="MOOD" style="height:46px;width:auto;margin-bottom:18px;align-self:flex-start;">
-          <div class="hero-jp">ムードを着る</div>
-          <h1 class="display">VISTE TU<br>MOOD</h1>
-          <span class="eyebrow">Colección completa · Edición limitada</span>
-          <p class="tagline">Minimal · Oversize · Statement pieces</p>
+        <div class="hero-quote">Every piece has a purpose.<br>What's yours?</div>
+      </div>
 
-          <div class="hero-barcode">
-            ${renderBarcodeSvg()}
-          </div>
-
-          <span class="hero-corner bl">+</span>
+      <div class="hero-bottom-bar">
+        <div class="hero-coords">35.6762° N<br>139.6503° E</div>
+        <div class="hero-culture">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><line x1="3" y1="12" x2="21" y2="12"/></svg>
+          <div class="hero-culture-divider"></div>
+          <div>Inspired by street culture.<br>Designed for daily uniform.</div>
         </div>
-
-        <div class="hero-art">
-          ${renderHalftoneEyeSvg()}
+        <div class="hero-worldwide-barcode">
+          ${renderBarcodeSvg()}
+          <span>MOOD WORLDWIDE</span>
         </div>
-
-        <div class="hero-kanji-corner">限定版</div>
       </div>
     </div>
 
@@ -1066,6 +1205,7 @@ function renderOwnerDashboard(){
         <span class="pill active" style="margin-left:6px;">Modo dueño</span>
       </div>
       <div class="topbar-right">
+        <button class="pill" id="manageHeroBgBtn">${ICONS.settings} Encabezado</button>
         <button class="pill" id="manageCategoriesBtn">${ICONS.settings} Categorías</button>
         <button class="pill" id="openSettings">${ICONS.settings} WhatsApp</button>
         <a href="#" class="pill">Ver catálogo</a>
@@ -1096,6 +1236,7 @@ function renderOwnerDashboard(){
     ${renderProductModal()}
     ${renderSettingsModal()}
     ${renderCategoriesModal()}
+    ${renderHeroBgModal()}
   `;
 }
 
@@ -1166,6 +1307,41 @@ function renderSettingsModal(){
         <div class="modal-actions">
           <button class="btn-secondary" id="cancelSettingsModal">Cancelar</button>
           <button class="btn-primary" id="saveSettingsBtn">Guardar</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderHeroBgModal(){
+  return `
+    <div class="overlay" id="heroBgOverlay">
+      <div class="modal">
+        <button class="modal-close" id="closeHeroBgModal">${ICONS.close}</button>
+        <h2 class="display">Imagen del encabezado</h2>
+        <p class="modal-sub">Sube una foto o ilustración para usar de fondo en el encabezado del catálogo. El texto se mostrará por encima, con un degradado oscuro para que se siga leyendo bien.</p>
+
+        <div class="field">
+          <label>Vista previa actual</label>
+          <div id="heroBgPreviewWrap" class="hero-bg-preview-wrap">
+            ${state.heroBgImage
+              ? `<img src="${state.heroBgImage}" class="hero-bg-preview">`
+              : `<div class="hero-bg-preview-empty">Sin imagen — se muestra el diseño por defecto</div>`}
+          </div>
+        </div>
+
+        <div class="upload-zone" id="heroBgUploadZone">
+          ${ICONS.plus}
+          <div style="margin-top:6px;">Subir imagen desde tu celular o compu</div>
+        </div>
+        <input type="file" id="heroBgFileInput" accept="image/*" style="display:none;">
+
+        <p style="font-size:11px;color:var(--ink-dim);margin-top:10px;line-height:1.5;">
+          Recomendado: imagen horizontal (apaisada), buena resolución, tonos oscuros o con buen contraste para que el texto blanco se siga leyendo.
+        </p>
+
+        <div class="modal-actions">
+          ${state.heroBgImage ? `<button class="btn-secondary" id="removeHeroBgBtn">Quitar imagen</button>` : `<button class="btn-secondary" id="closeHeroBgModal2">Cerrar</button>`}
         </div>
       </div>
     </div>
@@ -1382,6 +1558,54 @@ function bindOwnerDashboardEvents(){
       }
     });
   });
+
+  // Hero background image modal
+  const heroBgOverlay = document.getElementById("heroBgOverlay");
+  document.getElementById("manageHeroBgBtn").addEventListener("click", ()=>{
+    heroBgOverlay.classList.add("show");
+  });
+  const closeHeroBg = ()=> heroBgOverlay.classList.remove("show");
+  const closeHeroBgBtn = document.getElementById("closeHeroBgModal");
+  const closeHeroBgBtn2 = document.getElementById("closeHeroBgModal2");
+  [closeHeroBgBtn, closeHeroBgBtn2].forEach(b=> b && b.addEventListener("click", closeHeroBg));
+  heroBgOverlay.addEventListener("click", (e)=>{ if(e.target===heroBgOverlay) closeHeroBg(); });
+
+  const heroBgUploadZone = document.getElementById("heroBgUploadZone");
+  const heroBgFileInput = document.getElementById("heroBgFileInput");
+  heroBgUploadZone.addEventListener("click", ()=> heroBgFileInput.click());
+  heroBgFileInput.addEventListener("change", async ()=>{
+    const file = heroBgFileInput.files[0];
+    if(!file) return;
+    if(!file.type.startsWith("image/")){
+      showToast("Elige un archivo de imagen válido");
+      return;
+    }
+    const originalLabel = heroBgUploadZone.innerHTML;
+    heroBgUploadZone.innerHTML = `<div style="font-size:12px;">Procesando imagen…</div>`;
+    try{
+      const dataUrl = await readFileAsCompressedDataUrl(file, 1920, 0.8);
+      await saveHeroBg(dataUrl);
+      render();
+      document.getElementById("heroBgOverlay").classList.add("show");
+      showToast("Imagen de encabezado actualizada");
+    }catch(err){
+      showToast("No se pudo cargar la imagen");
+    }finally{
+      heroBgFileInput.value = "";
+    }
+  });
+
+  const removeHeroBgBtn = document.getElementById("removeHeroBgBtn");
+  if(removeHeroBgBtn){
+    removeHeroBgBtn.addEventListener("click", async ()=>{
+      if(confirm("¿Quitar la imagen de fondo del encabezado? Se mostrará el diseño por defecto.")){
+        await removeHeroBg();
+        render();
+        document.getElementById("heroBgOverlay").classList.add("show");
+        showToast("Imagen quitada");
+      }
+    });
+  }
 }
 
 let uploadedImageDataUrl = null;
@@ -1493,6 +1717,14 @@ function render(){
       if(getRouteFromHash() === "owner" && state.authed) return;
       if(JSON.stringify(fresh) !== JSON.stringify(state.categories)){
         state.categories = fresh;
+        render();
+      }
+    });
+    db.ref(HERO_BG_KEY).on("value", (snap)=>{
+      const fresh = snap.val();
+      if(getRouteFromHash() === "owner" && state.authed) return;
+      if(fresh !== state.heroBgImage){
+        state.heroBgImage = fresh || null;
         render();
       }
     });
