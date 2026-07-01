@@ -108,7 +108,55 @@
   .chip:hover{border-color:var(--ink-dim);color:var(--ink);}
   .chip.active{background:var(--ink);border-color:var(--ink);color:#0a0a0a;}
 
-  .cat-row{
+  /* --- Panel dueño: topbar compacto --- */
+  .owner-topbar{ flex-wrap:nowrap; }
+  .owner-badge{
+    font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+    background:var(--accent);color:#fff;padding:3px 8px;border-radius:20px;margin-left:8px;
+  }
+  .owner-actions{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+  .owner-config-wrap{position:relative;}
+  .owner-config-btn{
+    display:flex;align-items:center;gap:6px;
+    font-size:12px;font-weight:600;letter-spacing:0.04em;
+    padding:8px 14px;border-radius:2px;
+    background:var(--card);border:1px solid var(--card-border);color:var(--ink);
+    cursor:pointer;transition:border-color .15s;white-space:nowrap;
+  }
+  .owner-config-btn svg{width:14px;height:14px;flex-shrink:0;}
+  .owner-config-btn:hover{border-color:var(--accent);}
+  .owner-config-menu{
+    position:absolute;top:calc(100% + 6px);right:0;
+    background:var(--card);border:1px solid var(--card-border);border-radius:4px;
+    min-width:190px;z-index:100;
+    display:none;flex-direction:column;
+    box-shadow:0 8px 24px rgba(0,0,0,0.4);overflow:hidden;
+  }
+  .owner-config-menu.open{display:flex;}
+  .config-item{
+    padding:11px 16px;font-size:13px;text-align:left;
+    color:var(--ink);cursor:pointer;background:none;border:none;
+    transition:background .15s;letter-spacing:0.01em;
+    border-bottom:1px solid var(--line);
+  }
+  .config-item:last-child{border-bottom:none;}
+  .config-item:hover{background:var(--bg-soft);color:var(--accent);}
+  .owner-action-btn{
+    font-size:12px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;
+    padding:8px 14px;border-radius:2px;cursor:pointer;border:none;white-space:nowrap;
+    transition:all .15s;text-align:center;
+  }
+  .owner-action-btn.secondary{
+    background:transparent;border:1px solid var(--card-border);color:var(--ink-dim);
+  }
+  .owner-action-btn.secondary:hover{border-color:var(--ink-dim);color:var(--ink);}
+  .owner-action-btn.danger{background:#1a0a0a;color:#e85050;border:1px solid #3a1010;}
+  .owner-action-btn.danger:hover{background:#e85050;color:#fff;}
+  @media(max-width:700px){
+    .owner-config-btn span{display:none;}
+    .owner-action-btn span{display:none;}
+    .owner-badge{display:none;}
+  }
     display:flex;align-items:center;justify-content:space-between;
     padding:10px 13px;background:var(--bg-soft);border:1px solid var(--card-border);
     border-radius:2px;margin-bottom:8px;font-size:13px;
@@ -364,25 +412,40 @@
   .price-block{display:flex;flex-direction:column;gap:1px;}
 
   /* --- Galería de imágenes --- */
-  .card-gallery{display:flex;flex-direction:column;gap:0;}
-  .card-img-main{
-    position:relative;aspect-ratio:4/3;overflow:hidden;background:#fff;cursor:zoom-in;
+  /* --- Slider de imágenes en tarjeta --- */
+  .card-slider{position:relative;aspect-ratio:4/3;overflow:hidden;background:#fff;cursor:zoom-in;}
+  .card-slider-track{
+    display:flex;height:100%;
+    transition:transform .32s cubic-bezier(.4,0,.2,1);
+    will-change:transform;
   }
-  .card-img-main img{
-    width:100%;height:100%;object-fit:cover;
-    transition:transform .5s cubic-bezier(.2,.8,.2,1);
+  .card-slider-track img{
+    min-width:100%;height:100%;object-fit:cover;flex-shrink:0;
+    user-select:none;pointer-events:none;
   }
-  .card:hover .card-img-main img{transform:scale(1.04);}
-  .card-img-thumbs{
-    display:flex;gap:2px;background:var(--line);
+  .card-slider-dots{
+    position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+    display:flex;gap:5px;z-index:2;
   }
-  .card-img-thumbs button{
-    flex:1;aspect-ratio:1;overflow:hidden;background:#fff;opacity:0.6;
-    transition:opacity .15s;border:none;padding:0;cursor:pointer;
+  .card-slider-dot{
+    width:6px;height:6px;border-radius:50%;
+    background:rgba(255,255,255,0.5);transition:background .2s,transform .2s;
   }
-  .card-img-thumbs button.active{opacity:1;outline:2px solid var(--accent);outline-offset:-2px;}
-  .card-img-thumbs button:hover{opacity:1;}
-  .card-img-thumbs button img{width:100%;height:100%;object-fit:cover;}
+  .card-slider-dot.active{background:#fff;transform:scale(1.2);}
+  .slider-arrow{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:28px;height:28px;border-radius:50%;
+    background:rgba(0,0,0,0.45);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    z-index:3;opacity:0;transition:opacity .15s;cursor:pointer;border:none;
+  }
+  .slider-arrow svg{width:14px;height:14px;}
+  .slider-arrow.left{left:8px;}
+  .slider-arrow.right{right:8px;}
+  .card:hover .slider-arrow{opacity:1;}
+  .card-tag-abs{position:absolute;top:12px;z-index:2;}
+  .card-tag-abs.left{left:12px;}
+  .card-tag-abs.right{right:12px;}
 
   /* --- Visor / Lightbox --- */
   .lightbox{
@@ -513,6 +576,17 @@
     letter-spacing:0.05em;
   }
   footer .display{font-size:18px;color:var(--ink);letter-spacing:0.1em;margin-bottom:6px;}
+  .footer-socials{
+    display:flex;align-items:center;justify-content:center;gap:24px;
+    margin-top:20px;flex-wrap:wrap;
+  }
+  .social-link{
+    display:flex;align-items:center;gap:8px;
+    font-size:12px;letter-spacing:0.04em;color:var(--ink-dim);
+    transition:color .2s;
+  }
+  .social-link:hover{color:var(--accent);}
+  .social-link svg{width:18px;height:18px;flex-shrink:0;}
   .owner-access-dot{
     display:inline-flex;align-items:center;justify-content:center;
     width:26px;height:26px;margin-top:18px;
@@ -1175,23 +1249,28 @@ function renderClientView(){
   const cards = products.map(p => {
     const imgs = getProductImages(p);
     const mainImg = imgs[0] || "";
-    const thumbs = imgs.length > 1 ? imgs.map((img, i) => `
-      <button class="card-thumb-btn ${i===0?'active':''}" data-action="thumb" data-idx="${i}" data-pid="${p.id}">
-        <img src="${img}" alt="">
-      </button>`).join("") : "";
-
     const hasSale = p.salePrice && Number(p.salePrice) > 0;
     const pct = hasSale ? Math.round((1 - Number(p.salePrice)/Number(p.price))*100) : 0;
+    const multipleImgs = imgs.length > 1;
+
+    const sliderImgs = imgs.map(img => `<img src="${img}" alt="${escapeHtml(p.name)}" loading="lazy">`).join("");
+    const dots = multipleImgs ? `<div class="card-slider-dots" id="dots-${p.id}">${imgs.map((_,i)=>`<div class="card-slider-dot ${i===0?'active':''}"></div>`).join("")}</div>` : "";
+    const arrows = multipleImgs ? `
+      <button class="slider-arrow left" data-action="slide-prev" data-pid="${p.id}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="slider-arrow right" data-action="slide-next" data-pid="${p.id}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>` : "";
 
     return `
     <div class="card" data-pid="${p.id}">
-      <div class="card-gallery">
-        <div class="card-img-main" data-action="zoom" data-pid="${p.id}">
-          <img src="${mainImg}" alt="${escapeHtml(p.name)}" loading="lazy" id="main-img-${p.id}">
-          ${!p.stock ? '<span class="card-tag out">Agotado</span>' : ''}
-          ${hasSale ? `<span class="card-tag" style="right:12px;left:auto;background:var(--accent);">-${pct}%</span>` : ''}
-        </div>
-        ${thumbs ? `<div class="card-img-thumbs" id="thumbs-${p.id}">${thumbs}</div>` : ''}
+      <div class="card-slider" data-action="zoom" data-pid="${p.id}" id="slider-${p.id}">
+        <div class="card-slider-track" id="track-${p.id}">${sliderImgs}</div>
+        ${dots}
+        ${arrows}
+        ${!p.stock ? '<span class="card-tag out card-tag-abs left">Agotado</span>' : ''}
+        ${hasSale ? `<span class="card-tag card-tag-abs right" style="background:var(--accent);">-${pct}%</span>` : ''}
       </div>
       <div class="card-body">
         <div class="card-name">${escapeHtml(p.name)}</div>
@@ -1310,6 +1389,16 @@ function renderClientView(){
     <footer>
       <div class="display">MOOD</div>
       <p>Accesorios y prendas con actitud · Escríbenos por WhatsApp para más info</p>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/mood_iquitos?igsh=MWE5c2E5YnR1MTcybA==" target="_blank" rel="noopener" class="social-link" title="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          <span>@mood_iquitos</span>
+        </a>
+        <a href="https://www.facebook.com/share/v/17oKFgeQtS/" target="_blank" rel="noopener" class="social-link" title="Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          <span>MOOD Iquitos</span>
+        </a>
+      </div>
       <a href="#owner" class="owner-access-dot" title="Acceso del dueño">${ICONS.settings}</a>
     </footer>
 
@@ -1387,19 +1476,53 @@ function bindClientEvents(){
     });
   });
 
-  // Thumbnails: cambiar imagen principal al hacer click en thumb
-  document.querySelectorAll('[data-action="thumb"]').forEach(btn=>{
-    btn.addEventListener("click", ()=>{
+  // Slider: estado por producto
+  const sliderState = {}; // pid -> { idx, total }
+
+  function goToSlide(pid, newIdx){
+    const p = state.products.find(x=>x.id===pid);
+    if(!p) return;
+    const imgs = getProductImages(p);
+    const total = imgs.length;
+    if(total < 2) return;
+    newIdx = ((newIdx % total) + total) % total;
+    sliderState[pid] = { idx: newIdx, total };
+    const track = document.getElementById(`track-${pid}`);
+    if(track) track.style.transform = `translateX(-${newIdx * 100}%)`;
+    const dotsEl = document.getElementById(`dots-${pid}`);
+    if(dotsEl){
+      dotsEl.querySelectorAll('.card-slider-dot').forEach((d,i)=> d.classList.toggle('active', i===newIdx));
+    }
+  }
+
+  // Flechas de slider
+  document.querySelectorAll('[data-action="slide-prev"]').forEach(btn=>{
+    btn.addEventListener("click", (e)=>{
+      e.stopPropagation();
       const pid = btn.getAttribute("data-pid");
-      const idx = parseInt(btn.getAttribute("data-idx"));
-      const p = state.products.find(x=>x.id===pid);
-      if(!p) return;
-      const imgs = getProductImages(p);
-      const mainImg = document.getElementById(`main-img-${pid}`);
-      if(mainImg) mainImg.src = imgs[idx];
-      const thumbContainer = document.getElementById(`thumbs-${pid}`);
-      if(thumbContainer){
-        thumbContainer.querySelectorAll('.card-thumb-btn').forEach((b,i)=> b.classList.toggle('active', i===idx));
+      const cur = sliderState[pid]?.idx || 0;
+      goToSlide(pid, cur - 1);
+    });
+  });
+  document.querySelectorAll('[data-action="slide-next"]').forEach(btn=>{
+    btn.addEventListener("click", (e)=>{
+      e.stopPropagation();
+      const pid = btn.getAttribute("data-pid");
+      const cur = sliderState[pid]?.idx || 0;
+      goToSlide(pid, cur + 1);
+    });
+  });
+
+  // Swipe táctil en cada slider
+  document.querySelectorAll('.card-slider').forEach(sliderEl=>{
+    const pid = sliderEl.getAttribute("data-pid");
+    let touchStartX = 0;
+    sliderEl.addEventListener("touchstart", (e)=>{ touchStartX = e.touches[0].clientX; }, { passive:true });
+    sliderEl.addEventListener("touchend", (e)=>{
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if(Math.abs(diff) > 40){
+        const cur = sliderState[pid]?.idx || 0;
+        goToSlide(pid, diff > 0 ? cur + 1 : cur - 1);
       }
     });
   });
@@ -1447,17 +1570,16 @@ function bindClientEvents(){
   }
 
   document.querySelectorAll('[data-action="zoom"]').forEach(el=>{
-    el.addEventListener("click", ()=>{
+    el.addEventListener("click", (e)=>{
+      // No abrir lightbox si se hizo click en flecha
+      if(e.target.closest('.slider-arrow')) return;
       const pid = el.getAttribute("data-pid");
       const p = state.products.find(x=>x.id===pid);
       if(!p) return;
       const imgs = getProductImages(p);
       if(!imgs.length) return;
-      // Abrir con la imagen actualmente visible (la del thumb activo)
-      const mainImg = document.getElementById(`main-img-${pid}`);
-      const currentSrc = mainImg ? mainImg.src : imgs[0];
-      const startIdx = imgs.findIndex(img=>currentSrc.endsWith(img.slice(-30))) ;
-      openLightbox(imgs, Math.max(0, startIdx));
+      const startIdx = sliderState[pid]?.idx || 0;
+      openLightbox(imgs, startIdx);
     });
   });
 
@@ -1633,28 +1755,36 @@ function renderOwnerDashboard(){
   `).join("");
 
   return `
-    <div class="topbar">
+    <div class="topbar owner-topbar">
       <div class="brand">
         <img src="${IMAGES.logo}" alt="MOOD">
         <span class="brand-name">MOOD</span>
-        <span class="pill active" style="margin-left:6px;">Modo dueño</span>
+        <span class="owner-badge">Panel del dueño</span>
       </div>
-      <div class="topbar-right">
-        <button class="pill" id="manageAnnouncementBtn">${ICONS.settings} Anuncio</button>
-        <button class="pill" id="manageAboutBtn">${ICONS.settings} Sobre MOOD</button>
-        <button class="pill" id="manageTermsBtn">${ICONS.settings} Términos</button>
-        <button class="pill" id="manageHeroBgBtn">${ICONS.settings} Encabezado</button>
-        <button class="pill" id="manageCategoriesBtn">${ICONS.settings} Categorías</button>
-        <button class="pill" id="openSettings">${ICONS.settings} WhatsApp</button>
-        <a href="#" class="pill">Ver catálogo</a>
-        <button class="pill" id="logoutBtn">Salir</button>
+      <div class="owner-actions">
+        <div class="owner-config-wrap">
+          <button class="owner-config-btn" id="ownerConfigToggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            Configuración
+          </button>
+          <div class="owner-config-menu" id="ownerConfigMenu">
+            <button class="config-item" id="manageAnnouncementBtn">📢 Anuncio</button>
+            <button class="config-item" id="manageHeroBgBtn">🖼️ Encabezado</button>
+            <button class="config-item" id="manageCategoriesBtn">🏷️ Categorías</button>
+            <button class="config-item" id="openSettings">📱 WhatsApp</button>
+            <button class="config-item" id="manageAboutBtn">💬 Sobre MOOD</button>
+            <button class="config-item" id="manageTermsBtn">📋 Términos</button>
+          </div>
+        </div>
+        <a href="#" class="owner-action-btn secondary">Ver catálogo</a>
+        <button class="owner-action-btn danger" id="logoutBtn">Salir</button>
       </div>
     </div>
 
-    <div class="wrap" style="padding-top:32px;">
+    <div class="wrap" style="padding-top:28px;">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:8px;">
         <div>
-          <div class="display" style="font-size:30px;">Tus prendas</div>
+          <div class="display" style="font-size:28px;">Tus prendas</div>
           <p style="color:var(--ink-dim);font-size:13px;margin-top:4px;">Los cambios se reflejan al instante en la página de clientes.</p>
         </div>
         <button class="btn-primary" id="addProductBtn" style="display:flex;align-items:center;gap:6px;width:auto;padding:12px 20px;">${ICONS.plus} Añadir prenda</button>
@@ -1891,6 +2021,16 @@ function renderCategoriesModal(){
 let stockToggleState = true;
 
 function bindOwnerDashboardEvents(){
+  // Menú desplegable de configuración
+  const configToggle = document.getElementById("ownerConfigToggle");
+  const configMenu = document.getElementById("ownerConfigMenu");
+  configToggle.addEventListener("click", (e)=>{
+    e.stopPropagation();
+    configMenu.classList.toggle("open");
+  });
+  document.addEventListener("click", ()=> configMenu.classList.remove("open"), { once: false });
+  configMenu.addEventListener("click", (e)=> e.stopPropagation());
+
   document.querySelectorAll('[data-action="filter"]').forEach(btn=>{
     btn.addEventListener("click", ()=>{
       state.activeCategory = btn.getAttribute("data-cat");
