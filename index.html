@@ -122,6 +122,45 @@
   .hero-bg-preview{width:100%;height:100%;object-fit:cover;}
   .hero-bg-preview-empty{font-size:12px;color:var(--ink-dim);text-align:center;padding:20px;}
 
+  /* Múltiples imágenes en modal de producto */
+  .multi-img-grid{
+    display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;
+  }
+  .multi-img-item{
+    position:relative;width:72px;height:72px;border-radius:2px;overflow:hidden;
+    border:2px solid var(--accent);flex-shrink:0;
+  }
+  .multi-img-item img{width:100%;height:100%;object-fit:cover;}
+  .multi-img-badge{
+    position:absolute;bottom:0;left:0;right:0;
+    font-size:9px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
+    background:var(--accent);color:#fff;text-align:center;padding:2px 0;
+  }
+  .multi-img-remove{
+    position:absolute;top:2px;right:2px;
+    width:18px;height:18px;border-radius:50%;
+    background:rgba(0,0,0,0.7);color:#fff;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;
+  }
+  .multi-img-remove svg{width:10px;height:10px;}
+  .multi-img-add{
+    width:72px;height:72px;border-radius:2px;
+    border:1px dashed var(--card-border);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--ink-dim);cursor:pointer;transition:border-color .15s;flex-shrink:0;
+  }
+  .multi-img-add:hover{border-color:var(--accent);color:var(--ink);}
+  .multi-img-add svg{width:20px;height:20px;}
+  .preset-thumbs-row{
+    display:flex;gap:6px;flex-wrap:wrap;
+  }
+  .preset-thumb{
+    width:56px;height:56px;object-fit:cover;border-radius:2px;cursor:pointer;
+    border:2px solid transparent;transition:all .15s;opacity:0.8;
+  }
+  .preset-thumb:hover{opacity:1;border-color:var(--ink-dim);}
+  .preset-thumb.used{border-color:var(--accent);opacity:1;}
+
   /* ---------- Hero ---------- */
   /* ---------- Hero (streetwear redesign v2) ---------- */
   .hero{
@@ -307,6 +346,114 @@
     margin-top:-4px;
   }
   .size-guide-link:hover{color:#fff;}
+
+  /* --- Precios oferta --- */
+  .price-original{
+    font-family:'Bebas Neue';font-size:16px;letter-spacing:0.02em;
+    color:var(--ink-dim);text-decoration:line-through;opacity:0.7;
+  }
+  .price-sale{
+    font-family:'Bebas Neue';font-size:22px;letter-spacing:0.02em;
+    color:var(--accent);
+  }
+  .price-sale-badge{
+    font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+    background:var(--accent);color:#fff;padding:2px 7px;border-radius:2px;
+    align-self:center;
+  }
+  .price-block{display:flex;flex-direction:column;gap:1px;}
+
+  /* --- Galería de imágenes --- */
+  .card-gallery{display:flex;flex-direction:column;gap:0;}
+  .card-img-main{
+    position:relative;aspect-ratio:4/3;overflow:hidden;background:#fff;cursor:zoom-in;
+  }
+  .card-img-main img{
+    width:100%;height:100%;object-fit:cover;
+    transition:transform .5s cubic-bezier(.2,.8,.2,1);
+  }
+  .card:hover .card-img-main img{transform:scale(1.04);}
+  .card-img-thumbs{
+    display:flex;gap:2px;background:var(--line);
+  }
+  .card-img-thumbs button{
+    flex:1;aspect-ratio:1;overflow:hidden;background:#fff;opacity:0.6;
+    transition:opacity .15s;border:none;padding:0;cursor:pointer;
+  }
+  .card-img-thumbs button.active{opacity:1;outline:2px solid var(--accent);outline-offset:-2px;}
+  .card-img-thumbs button:hover{opacity:1;}
+  .card-img-thumbs button img{width:100%;height:100%;object-fit:cover;}
+
+  /* --- Visor / Lightbox --- */
+  .lightbox{
+    position:fixed;inset:0;background:rgba(0,0,0,0.95);
+    z-index:400;display:none;align-items:center;justify-content:center;
+    flex-direction:column;gap:16px;padding:20px;
+  }
+  .lightbox.show{display:flex;}
+  .lightbox-img-wrap{
+    position:relative;flex:1;display:flex;align-items:center;justify-content:center;
+    overflow:hidden;width:100%;cursor:zoom-in;
+  }
+  .lightbox-img-wrap.zoomed{cursor:zoom-out;}
+  .lightbox-img-wrap img{
+    max-width:100%;max-height:70vh;object-fit:contain;
+    transition:transform .3s ease;transform-origin:center center;
+    user-select:none;
+  }
+  .lightbox-img-wrap.zoomed img{transform:scale(2.2);}
+  .lightbox-nav{
+    display:flex;gap:10px;
+  }
+  .lightbox-thumb{
+    width:56px;height:56px;border-radius:2px;overflow:hidden;cursor:pointer;
+    opacity:0.5;border:2px solid transparent;transition:all .15s;
+  }
+  .lightbox-thumb.active{opacity:1;border-color:var(--accent);}
+  .lightbox-thumb img{width:100%;height:100%;object-fit:cover;}
+  .lightbox-close{
+    position:absolute;top:16px;right:16px;width:36px;height:36px;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--ink-dim);z-index:5;
+  }
+  .lightbox-close:hover{color:var(--ink);}
+  .lightbox-arrow{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+    color:var(--ink-dim);z-index:5;
+  }
+  .lightbox-arrow:hover{color:var(--ink);}
+  .lightbox-arrow.prev{left:10px;}
+  .lightbox-arrow.next{right:10px;}
+  .lightbox-arrow svg,.lightbox-close svg{width:22px;height:22px;}
+
+  /* --- Secciones About y Terms --- */
+  .info-sections{
+    border-top:1px solid var(--line);
+  }
+  .info-section{
+    border-bottom:1px solid var(--line);
+  }
+  .info-section-header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 28px;cursor:pointer;
+    transition:background .15s;
+  }
+  .info-section-header:hover{background:var(--bg-soft);}
+  .info-section-header h3{
+    font-family:'Bebas Neue';font-size:20px;letter-spacing:0.06em;
+  }
+  .info-section-header .chevron{
+    width:18px;height:18px;color:var(--ink-dim);
+    transition:transform .25s;flex-shrink:0;
+  }
+  .info-section-header.open .chevron{transform:rotate(180deg);}
+  .info-section-body{
+    display:none;padding:0 28px 24px;
+    font-size:13.5px;color:var(--ink-dim);line-height:1.75;
+    white-space:pre-line;
+  }
+  .info-section-body.open{display:block;}
   .size-table{
     width:100%;border-collapse:collapse;margin:6px 0 4px;font-size:13px;
   }
@@ -522,6 +669,8 @@ const STORAGE_KEY = "mood_catalog_v1";
 const WHATSAPP_NUMBER_KEY = "mood_whatsapp_v1";
 const HERO_BG_KEY = "mood_hero_bg_v1";
 const ANNOUNCEMENT_KEY = "mood_announcement_v1";
+const TERMS_KEY = "mood_terms_v1";
+const ABOUT_KEY = "mood_about_v1";
 
 /* ====== CONFIGURACIÓN DE FIREBASE ======
    Reemplaza estos valores con los de TU proyecto de Firebase.
@@ -620,9 +769,11 @@ let state = {
   whatsapp: "51999999999",
   heroBgImage: null,
   announcement: "🔥 ¡NUEVA COLECCIÓN MOOD YA DISPONIBLE! — 📦 ENVÍOS A TODO IQUITOS — 🛍️",
+  terms: `PROCESO DE VENTA\nRealizamos ventas únicamente por WhatsApp. Escríbenos, elige tu prenda y coordinamos la entrega.\n\nFORMAS DE PAGO\nSolo aceptamos transferencias, Yape o Plin. No aceptamos tarjetas de crédito ni débito.\n\nENVÍOS Y DELIVERY\nEl delivery está disponible únicamente dentro de la zona de Iquitos. No realizamos envíos a otras ciudades o regiones.\n\nDEVOLUCIONES\nNo aceptamos devoluciones ni cambios una vez confirmada la venta. Asegúrate de revisar bien la talla y el modelo antes de confirmar tu pedido.\n\nSTOCK\nNuestras prendas son de edición limitada. Una vez agotadas no se reponen.`,
+  about: `MOOD nació en Iquitos, Perú, con la idea de traer a la ciudad un estilo que mezcla la cultura streetwear internacional con la identidad local.\n\nCada prenda que ofrecemos es seleccionada con criterio: oversize, con mensaje, con carácter. No vendemos ropa cualquiera — vendemos actitud.\n\nMOOD es para quienes saben que lo que vistes dice algo antes de que hables.\n\nEstamos en Iquitos desde 2024.`,
   isOwner: false,
   authed: false,
-  view: "client", // client | owner
+  view: "client",
   loading: true
 };
 
@@ -734,6 +885,27 @@ function resolveImage(imageValue){
   return IMAGES[imageValue] || "";
 }
 
+function getProductImages(p){
+  if(p.images && p.images.length > 0) return p.images.map(resolveImage).filter(Boolean);
+  if(p.image) return [resolveImage(p.image)];
+  return [];
+}
+
+function renderPriceBlock(p){
+  if(p.salePrice && Number(p.salePrice) > 0){
+    const pct = Math.round((1 - Number(p.salePrice)/Number(p.price))*100);
+    return `
+      <div class="price-block">
+        <span class="price-original">S/ ${formatPrice(p.price)}</span>
+        <div style="display:flex;align-items:baseline;gap:8px;">
+          <span class="price-sale">S/ ${formatPrice(p.salePrice)}</span>
+          ${pct>0?`<span class="price-sale-badge">-${pct}%</span>`:''}
+        </div>
+      </div>`;
+  }
+  return `<span class="card-price">S/ ${formatPrice(p.price)}</span>`;
+}
+
 function readFileAsCompressedDataUrl(file, maxSize = 1200, quality = 0.82){
   return new Promise((resolve, reject)=>{
     const reader = new FileReader();
@@ -805,20 +977,26 @@ async function loadState(){
       const annVal = annSnap.val();
       if(annVal !== null && annVal !== undefined) state.announcement = annVal;
     }catch(e){ /* keep default */ }
+    try{
+      const termsSnap = await db.ref(TERMS_KEY).once("value");
+      const termsVal = termsSnap.val();
+      if(termsVal) state.terms = termsVal;
+    }catch(e){ /* keep default */ }
+    try{
+      const aboutSnap = await db.ref(ABOUT_KEY).once("value");
+      const aboutVal = aboutSnap.val();
+      if(aboutVal) state.about = aboutVal;
+    }catch(e){ /* keep default */ }
   }else{
-    // Fallback local: solo funciona en este mismo navegador/dispositivo
+    // Fallback local
     try{
       const local = localStorage.getItem(STORAGE_KEY);
       state.products = local ? JSON.parse(local) : DEFAULT_PRODUCTS;
-    }catch(e){
-      state.products = DEFAULT_PRODUCTS;
-    }
+    }catch(e){ state.products = DEFAULT_PRODUCTS; }
     try{
       const localCat = localStorage.getItem(CATEGORIES_KEY);
       state.categories = localCat ? JSON.parse(localCat) : DEFAULT_CATEGORIES;
-    }catch(e){
-      state.categories = DEFAULT_CATEGORIES;
-    }
+    }catch(e){ state.categories = DEFAULT_CATEGORIES; }
     try{
       const localWa = localStorage.getItem(WHATSAPP_NUMBER_KEY);
       if(localWa) state.whatsapp = JSON.parse(localWa);
@@ -830,6 +1008,14 @@ async function loadState(){
     try{
       const localAnn = localStorage.getItem(ANNOUNCEMENT_KEY);
       if(localAnn !== null) state.announcement = JSON.parse(localAnn);
+    }catch(e){ /* keep default */ }
+    try{
+      const localTerms = localStorage.getItem(TERMS_KEY);
+      if(localTerms) state.terms = JSON.parse(localTerms);
+    }catch(e){ /* keep default */ }
+    try{
+      const localAbout = localStorage.getItem(ABOUT_KEY);
+      if(localAbout) state.about = JSON.parse(localAbout);
     }catch(e){ /* keep default */ }
   }
   state.loading = false;
@@ -919,16 +1105,30 @@ async function removeHeroBg(){
 async function saveAnnouncement(text){
   state.announcement = text;
   if(firebaseReady){
-    try{
-      await db.ref(ANNOUNCEMENT_KEY).set(text);
-    }catch(e){
-      console.error("Error guardando anuncio:", e);
-      showToast("No se pudo guardar el anuncio.");
-    }
+    try{ await db.ref(ANNOUNCEMENT_KEY).set(text); }
+    catch(e){ showToast("No se pudo guardar el anuncio."); }
   }else{
-    try{
-      localStorage.setItem(ANNOUNCEMENT_KEY, JSON.stringify(text));
-    }catch(e){}
+    try{ localStorage.setItem(ANNOUNCEMENT_KEY, JSON.stringify(text)); }catch(e){}
+  }
+}
+
+async function saveTerms(text){
+  state.terms = text;
+  if(firebaseReady){
+    try{ await db.ref(TERMS_KEY).set(text); }
+    catch(e){ showToast("No se pudo guardar los términos."); }
+  }else{
+    try{ localStorage.setItem(TERMS_KEY, JSON.stringify(text)); }catch(e){}
+  }
+}
+
+async function saveAbout(text){
+  state.about = text;
+  if(firebaseReady){
+    try{ await db.ref(ABOUT_KEY).set(text); }
+    catch(e){ showToast("No se pudo guardar la info de MOOD."); }
+  }else{
+    try{ localStorage.setItem(ABOUT_KEY, JSON.stringify(text)); }catch(e){}
   }
 }
 
@@ -972,25 +1172,40 @@ function renderClientView(){
     ? allProducts
     : allProducts.filter(p => (p.category || "Polos") === activeCat);
 
-  const cards = products.map(p => `
-    <div class="card">
-      <div class="card-img-wrap">
-        <img src="${resolveImage(p.image)}" alt="${escapeHtml(p.name)}" loading="lazy">
-        ${!p.stock ? '<span class="card-tag out">Agotado</span>' : ''}
+  const cards = products.map(p => {
+    const imgs = getProductImages(p);
+    const mainImg = imgs[0] || "";
+    const thumbs = imgs.length > 1 ? imgs.map((img, i) => `
+      <button class="card-thumb-btn ${i===0?'active':''}" data-action="thumb" data-idx="${i}" data-pid="${p.id}">
+        <img src="${img}" alt="">
+      </button>`).join("") : "";
+
+    const hasSale = p.salePrice && Number(p.salePrice) > 0;
+    const pct = hasSale ? Math.round((1 - Number(p.salePrice)/Number(p.price))*100) : 0;
+
+    return `
+    <div class="card" data-pid="${p.id}">
+      <div class="card-gallery">
+        <div class="card-img-main" data-action="zoom" data-pid="${p.id}">
+          <img src="${mainImg}" alt="${escapeHtml(p.name)}" loading="lazy" id="main-img-${p.id}">
+          ${!p.stock ? '<span class="card-tag out">Agotado</span>' : ''}
+          ${hasSale ? `<span class="card-tag" style="right:12px;left:auto;background:var(--accent);">-${pct}%</span>` : ''}
+        </div>
+        ${thumbs ? `<div class="card-img-thumbs" id="thumbs-${p.id}">${thumbs}</div>` : ''}
       </div>
       <div class="card-body">
         <div class="card-name">${escapeHtml(p.name)}</div>
         <div class="card-desc">${escapeHtml(p.desc || '')}</div>
         ${(p.category || 'Polos') === 'Polos' ? `<button class="size-guide-link" data-action="size-guide" data-id="${p.id}">Ver guía de tallas</button>` : ''}
         <div class="card-foot">
-          <span class="card-price">S/ ${formatPrice(p.price)}</span>
+          ${renderPriceBlock(p)}
           ${p.stock
             ? `<button class="btn-buy" data-action="interest" data-id="${p.id}">${ICONS.whatsapp} Consultar</button>`
             : `<span class="btn-buy disabled">No disponible</span>`}
         </div>
       </div>
-    </div>
-  `).join("");
+    </div>`;
+  }).join("");
 
   const empty = products.length === 0 ? `
     <div class="empty">
@@ -1075,6 +1290,23 @@ function renderClientView(){
       ${products.length ? `<div class="grid">${cards}</div>` : ""}
     </div>
 
+    <div class="info-sections">
+      <div class="info-section">
+        <div class="info-section-header" data-action="toggle-section" data-section="about">
+          <h3 class="display">Sobre MOOD</h3>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="info-section-body" id="section-about">${escapeHtml(state.about || '')}</div>
+      </div>
+      <div class="info-section">
+        <div class="info-section-header" data-action="toggle-section" data-section="terms">
+          <h3 class="display">Términos y condiciones</h3>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="info-section-body" id="section-terms">${escapeHtml(state.terms || '')}</div>
+      </div>
+    </div>
+
     <footer>
       <div class="display">MOOD</div>
       <p>Accesorios y prendas con actitud · Escríbenos por WhatsApp para más info</p>
@@ -1122,6 +1354,20 @@ function renderClientView(){
         </div>
       </div>
     </div>
+
+    <div class="lightbox" id="lightbox">
+      <button class="lightbox-close" id="lightboxClose">${ICONS.close}</button>
+      <button class="lightbox-arrow prev" id="lightboxPrev">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="lightbox-arrow next" id="lightboxNext">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="lightbox-img-wrap" id="lightboxImgWrap">
+        <img id="lightboxImg" src="" alt="">
+      </div>
+      <div class="lightbox-nav" id="lightboxNav"></div>
+    </div>
   `;
 }
 
@@ -1138,6 +1384,120 @@ function bindClientEvents(){
     btn.addEventListener("click", ()=>{
       state.activeCategory = btn.getAttribute("data-cat");
       render();
+    });
+  });
+
+  // Thumbnails: cambiar imagen principal al hacer click en thumb
+  document.querySelectorAll('[data-action="thumb"]').forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const pid = btn.getAttribute("data-pid");
+      const idx = parseInt(btn.getAttribute("data-idx"));
+      const p = state.products.find(x=>x.id===pid);
+      if(!p) return;
+      const imgs = getProductImages(p);
+      const mainImg = document.getElementById(`main-img-${pid}`);
+      if(mainImg) mainImg.src = imgs[idx];
+      const thumbContainer = document.getElementById(`thumbs-${pid}`);
+      if(thumbContainer){
+        thumbContainer.querySelectorAll('.card-thumb-btn').forEach((b,i)=> b.classList.toggle('active', i===idx));
+      }
+    });
+  });
+
+  // Lightbox: zoom al hacer click en la imagen principal
+  let lightboxImages = [];
+  let lightboxIndex = 0;
+  let lightboxZoomed = false;
+
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightboxImg");
+  const lightboxNav = document.getElementById("lightboxNav");
+  const lightboxImgWrap = document.getElementById("lightboxImgWrap");
+
+  function openLightbox(imgs, startIdx){
+    lightboxImages = imgs;
+    lightboxIndex = startIdx;
+    lightboxZoomed = false;
+    lightboxImgWrap.classList.remove("zoomed");
+    lightboxImg.src = imgs[lightboxIndex];
+    lightboxNav.innerHTML = imgs.map((img, i)=>`
+      <div class="lightbox-thumb ${i===lightboxIndex?'active':''}" data-idx="${i}">
+        <img src="${img}" alt="">
+      </div>`).join("");
+    lightboxNav.querySelectorAll('.lightbox-thumb').forEach(t=>{
+      t.addEventListener("click", ()=>{
+        lightboxIndex = parseInt(t.getAttribute("data-idx"));
+        updateLightbox();
+      });
+    });
+    lightbox.classList.add("show");
+    document.body.style.overflow = "hidden";
+  }
+
+  function updateLightbox(){
+    lightboxZoomed = false;
+    lightboxImgWrap.classList.remove("zoomed");
+    lightboxImg.src = lightboxImages[lightboxIndex];
+    lightboxNav.querySelectorAll('.lightbox-thumb').forEach((t,i)=> t.classList.toggle('active', i===lightboxIndex));
+  }
+
+  function closeLightbox(){
+    lightbox.classList.remove("show");
+    document.body.style.overflow = "";
+  }
+
+  document.querySelectorAll('[data-action="zoom"]').forEach(el=>{
+    el.addEventListener("click", ()=>{
+      const pid = el.getAttribute("data-pid");
+      const p = state.products.find(x=>x.id===pid);
+      if(!p) return;
+      const imgs = getProductImages(p);
+      if(!imgs.length) return;
+      // Abrir con la imagen actualmente visible (la del thumb activo)
+      const mainImg = document.getElementById(`main-img-${pid}`);
+      const currentSrc = mainImg ? mainImg.src : imgs[0];
+      const startIdx = imgs.findIndex(img=>currentSrc.endsWith(img.slice(-30))) ;
+      openLightbox(imgs, Math.max(0, startIdx));
+    });
+  });
+
+  lightboxImgWrap.addEventListener("click", ()=>{
+    lightboxZoomed = !lightboxZoomed;
+    lightboxImgWrap.classList.toggle("zoomed", lightboxZoomed);
+  });
+
+  document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
+  lightbox.addEventListener("click", (e)=>{ if(e.target===lightbox) closeLightbox(); });
+
+  document.getElementById("lightboxPrev").addEventListener("click", (e)=>{
+    e.stopPropagation();
+    if(lightboxImages.length < 2) return;
+    lightboxIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
+    updateLightbox();
+  });
+
+  document.getElementById("lightboxNext").addEventListener("click", (e)=>{
+    e.stopPropagation();
+    if(lightboxImages.length < 2) return;
+    lightboxIndex = (lightboxIndex + 1) % lightboxImages.length;
+    updateLightbox();
+  });
+
+  document.addEventListener("keydown", function lbKeys(e){
+    if(!lightbox.classList.contains("show")) return;
+    if(e.key==="Escape") closeLightbox();
+    if(e.key==="ArrowLeft"){ lightboxIndex=(lightboxIndex-1+lightboxImages.length)%lightboxImages.length; updateLightbox(); }
+    if(e.key==="ArrowRight"){ lightboxIndex=(lightboxIndex+1)%lightboxImages.length; updateLightbox(); }
+  });
+
+  // Secciones desplegables About / Terms
+  document.querySelectorAll('[data-action="toggle-section"]').forEach(header=>{
+    header.addEventListener("click", ()=>{
+      const section = header.getAttribute("data-section");
+      const body = document.getElementById(`section-${section}`);
+      const isOpen = body.classList.contains("open");
+      body.classList.toggle("open", !isOpen);
+      header.classList.toggle("open", !isOpen);
     });
   });
 
@@ -1237,26 +1597,30 @@ function renderOwnerDashboard(){
     ? allProducts
     : allProducts.filter(p => (p.category || "Polos") === activeCat);
 
-  const rows = products.map(p => `
+  const rows = products.map(p => {
+    const imgs = getProductImages(p);
+    const mainImg = imgs[0] || "";
+    return `
     <div class="card">
       <div class="card-img-wrap">
-        <img src="${resolveImage(p.image)}" alt="${escapeHtml(p.name)}">
+        <img src="${mainImg}" alt="${escapeHtml(p.name)}">
         ${!p.stock ? '<span class="card-tag out">Agotado</span>' : ''}
         <span class="card-tag" style="left:auto;right:12px;background:#1f1f1f;color:var(--ink-dim);">${escapeHtml(p.category || 'Polos')}</span>
+        ${imgs.length > 1 ? `<span class="card-tag" style="top:auto;bottom:8px;left:8px;background:#1f1f1f;color:var(--ink-dim);">${imgs.length} fotos</span>` : ''}
       </div>
       <div class="card-body">
         <div class="card-name">${escapeHtml(p.name)}</div>
         <div class="card-desc">${escapeHtml(p.desc || '')}</div>
         <div class="card-foot">
-          <span class="card-price">S/ ${formatPrice(p.price)}</span>
+          ${renderPriceBlock(p)}
         </div>
         <div class="owner-controls">
           <button class="icon-btn" data-action="edit" data-id="${p.id}" title="Editar">${ICONS.edit}</button>
           <button class="icon-btn danger" data-action="delete" data-id="${p.id}" title="Eliminar">${ICONS.trash}</button>
         </div>
       </div>
-    </div>
-  `).join("");
+    </div>`;
+  }).join("");
 
   const empty = products.length === 0 ? `
     <div class="empty">
@@ -1277,6 +1641,8 @@ function renderOwnerDashboard(){
       </div>
       <div class="topbar-right">
         <button class="pill" id="manageAnnouncementBtn">${ICONS.settings} Anuncio</button>
+        <button class="pill" id="manageAboutBtn">${ICONS.settings} Sobre MOOD</button>
+        <button class="pill" id="manageTermsBtn">${ICONS.settings} Términos</button>
         <button class="pill" id="manageHeroBgBtn">${ICONS.settings} Encabezado</button>
         <button class="pill" id="manageCategoriesBtn">${ICONS.settings} Categorías</button>
         <button class="pill" id="openSettings">${ICONS.settings} WhatsApp</button>
@@ -1310,6 +1676,8 @@ function renderOwnerDashboard(){
     ${renderCategoriesModal()}
     ${renderHeroBgModal()}
     ${renderAnnouncementModal()}
+    ${renderAboutModal()}
+    ${renderTermsModal()}
   `;
 }
 
@@ -1322,7 +1690,7 @@ function renderProductModal(){
         <input type="hidden" id="productId">
 
         <div class="field">
-          <label>Foto del producto</label>
+          <label>Fotos del producto (hasta 4 — la primera es la principal)</label>
           <div class="img-preview-row" id="imageOptions"></div>
           <div class="upload-zone" id="uploadZone">
             ${ICONS.plus}
@@ -1343,13 +1711,18 @@ function renderProductModal(){
 
         <div class="field-row">
           <div class="field">
-            <label>Precio (S/)</label>
+            <label>Precio normal (S/)</label>
             <input type="number" id="fieldPrice" placeholder="89.90" min="0" step="0.10">
           </div>
           <div class="field">
-            <label>Categoría</label>
-            <select id="fieldCategory"></select>
+            <label>Precio oferta (S/) — opcional</label>
+            <input type="number" id="fieldSalePrice" placeholder="Ej: 35.50" min="0" step="0.10">
           </div>
+        </div>
+
+        <div class="field">
+          <label>Categoría</label>
+          <select id="fieldCategory"></select>
         </div>
 
         <div class="toggle-row">
@@ -1427,7 +1800,7 @@ function renderAnnouncementModal(){
       <div class="modal">
         <button class="modal-close" id="closeAnnouncementModal">${ICONS.close}</button>
         <h2 class="display">Cinta de anuncio</h2>
-        <p class="modal-sub">Este mensaje se mueve en una cinta arriba del catálogo, encima del logo. Útil para promociones, envíos o avisos. Déjalo vacío para ocultarlo por completo.</p>
+        <p class="modal-sub">Este mensaje se mueve en una cinta arriba del catálogo. Déjalo vacío para ocultarlo.</p>
         <div class="field">
           <label>Texto del anuncio</label>
           <textarea id="fieldAnnouncement" rows="3" placeholder="Ej: 🔥 Nueva colección ya disponible — Envíos a todo Iquitos">${escapeHtml(state.announcement || '')}</textarea>
@@ -1435,6 +1808,46 @@ function renderAnnouncementModal(){
         <div class="modal-actions">
           <button class="btn-secondary" id="cancelAnnouncementModal">Cancelar</button>
           <button class="btn-primary" id="saveAnnouncementBtn">Guardar</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderAboutModal(){
+  return `
+    <div class="overlay" id="aboutOverlay">
+      <div class="modal">
+        <button class="modal-close" id="closeAboutModal">${ICONS.close}</button>
+        <h2 class="display">Sobre MOOD</h2>
+        <p class="modal-sub">Esta sección aparece como desplegable al final del catálogo. Cuéntale a los clientes el origen e historia de MOOD.</p>
+        <div class="field">
+          <label>Historia de MOOD</label>
+          <textarea id="fieldAbout" rows="7" placeholder="Cuéntanos sobre MOOD...">${escapeHtml(state.about || '')}</textarea>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-secondary" id="cancelAboutModal">Cancelar</button>
+          <button class="btn-primary" id="saveAboutBtn">Guardar</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderTermsModal(){
+  return `
+    <div class="overlay" id="termsOverlay">
+      <div class="modal">
+        <button class="modal-close" id="closeTermsModal">${ICONS.close}</button>
+        <h2 class="display">Términos y condiciones</h2>
+        <p class="modal-sub">Esta sección aparece como desplegable al final del catálogo. Explica el proceso de venta, pagos, delivery y política de devoluciones.</p>
+        <div class="field">
+          <label>Términos y condiciones</label>
+          <textarea id="fieldTerms" rows="10" placeholder="Describe el proceso de venta...">${escapeHtml(state.terms || '')}</textarea>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-secondary" id="cancelTermsModal">Cancelar</button>
+          <button class="btn-primary" id="saveTermsBtn">Guardar</button>
         </div>
       </div>
     </div>
@@ -1520,28 +1933,33 @@ function bindOwnerDashboardEvents(){
   document.getElementById("cancelProductModal").addEventListener("click", ()=> productOverlay.classList.remove("show"));
   productOverlay.addEventListener("click", (e)=>{ if(e.target===productOverlay) productOverlay.classList.remove("show"); });
 
-  const uploadZone = document.getElementById("uploadZone");
+  // El fileInput es reutilizado tanto por uploadZone como por triggerPickImg dentro de renderImageGrid
   const fileInput = document.getElementById("fileInput");
-  uploadZone.addEventListener("click", ()=> fileInput.click());
+  const uploadZone = document.getElementById("uploadZone");
+  if(uploadZone) uploadZone.addEventListener("click", ()=> fileInput.click());
+
   fileInput.addEventListener("change", async ()=>{
     const file = fileInput.files[0];
     if(!file) return;
     if(!file.type.startsWith("image/")){
       showToast("Elige un archivo de imagen válido");
+      fileInput.value = "";
       return;
     }
-    const originalLabel = uploadZone.innerHTML;
-    uploadZone.innerHTML = `<div style="font-size:12px;">Procesando foto…</div>`;
+    if(uploadedImages.length >= 4){
+      showToast("Máximo 4 fotos por prenda");
+      fileInput.value = "";
+      return;
+    }
+    showToast("Procesando imagen…");
     try{
       const dataUrl = await readFileAsCompressedDataUrl(file);
-      uploadedImageDataUrl = dataUrl;
-      const imgKeys = Object.keys(IMAGES).filter(k => k !== "logo");
-      renderImageOptions(imgKeys, null, dataUrl);
-      showToast("Foto cargada, ya puedes guardar");
+      uploadedImages.push(dataUrl);
+      renderImageGrid();
+      showToast("Foto añadida");
     }catch(err){
       showToast("No se pudo cargar la foto");
     }finally{
-      uploadZone.innerHTML = originalLabel;
       fileInput.value = "";
     }
   });
@@ -1556,22 +1974,32 @@ function bindOwnerDashboardEvents(){
     const name = document.getElementById("fieldName").value.trim();
     const desc = document.getElementById("fieldDesc").value.trim();
     const price = parseFloat(document.getElementById("fieldPrice").value) || 0;
+    const salePrice = parseFloat(document.getElementById("fieldSalePrice").value) || 0;
     const category = document.getElementById("fieldCategory").value || (state.categories[0] || "Polos");
-    const selectedImg = document.querySelector("#imageOptions img.selected");
-    const image = selectedImg ? selectedImg.getAttribute("data-key") : (Object.keys(IMAGES).filter(k=>k!=="logo")[0]);
 
     if(!name){
       showToast("Ponle un nombre a la prenda");
       return;
     }
+    if(uploadedImages.length === 0){
+      showToast("Elige al menos una foto");
+      return;
+    }
+
+    const productData = {
+      name, desc, price,
+      salePrice: salePrice > 0 ? salePrice : null,
+      category,
+      images: [...uploadedImages],
+      image: uploadedImages[0], // compatibilidad legacy
+      stock: stockToggleState
+    };
 
     if(id){
       const idx = state.products.findIndex(p=>p.id===id);
-      if(idx > -1){
-        state.products[idx] = { ...state.products[idx], name, desc, price, category, image, stock: stockToggleState };
-      }
+      if(idx > -1) state.products[idx] = { ...state.products[idx], ...productData };
     }else{
-      state.products.push({ id: uid(), name, desc, price, category, image, stock: stockToggleState });
+      state.products.push({ id: uid(), ...productData });
     }
     await saveProducts();
     productOverlay.classList.remove("show");
@@ -1716,18 +2144,48 @@ function bindOwnerDashboardEvents(){
     closeAnnouncement();
     showToast(text ? "Anuncio actualizado" : "Anuncio ocultado");
   });
+
+  // About modal
+  const aboutOverlay = document.getElementById("aboutOverlay");
+  const closeAbout = ()=> aboutOverlay.classList.remove("show");
+  document.getElementById("manageAboutBtn").addEventListener("click", ()=> aboutOverlay.classList.add("show"));
+  document.getElementById("closeAboutModal").addEventListener("click", closeAbout);
+  document.getElementById("cancelAboutModal").addEventListener("click", closeAbout);
+  aboutOverlay.addEventListener("click", (e)=>{ if(e.target===aboutOverlay) closeAbout(); });
+  document.getElementById("saveAboutBtn").addEventListener("click", async ()=>{
+    const text = document.getElementById("fieldAbout").value.trim();
+    await saveAbout(text);
+    closeAbout();
+    showToast("Historia de MOOD guardada");
+  });
+
+  // Terms modal
+  const termsOverlay = document.getElementById("termsOverlay");
+  const closeTerms = ()=> termsOverlay.classList.remove("show");
+  document.getElementById("manageTermsBtn").addEventListener("click", ()=> termsOverlay.classList.add("show"));
+  document.getElementById("closeTermsModal").addEventListener("click", closeTerms);
+  document.getElementById("cancelTermsModal").addEventListener("click", closeTerms);
+  termsOverlay.addEventListener("click", (e)=>{ if(e.target===termsOverlay) closeTerms(); });
+  document.getElementById("saveTermsBtn").addEventListener("click", async ()=>{
+    const text = document.getElementById("fieldTerms").value.trim();
+    await saveTerms(text);
+    closeTerms();
+    showToast("Términos y condiciones guardados");
+  });
 }
 
-let uploadedImageDataUrl = null;
+let uploadedImages = []; // array de data-urls o keys de imágenes predefinidas
 
 function openProductModal(product){
   stockToggleState = product ? !!product.stock : true;
-  uploadedImageDataUrl = null;
+  uploadedImages = [];
+
   document.getElementById("productModalTitle").textContent = product ? "Editar prenda" : "Añadir prenda";
   document.getElementById("productId").value = product ? product.id : "";
   document.getElementById("fieldName").value = product ? product.name : "";
   document.getElementById("fieldDesc").value = product ? product.desc : "";
   document.getElementById("fieldPrice").value = product ? product.price : "";
+  document.getElementById("fieldSalePrice").value = product ? (product.salePrice || "") : "";
   document.getElementById("stockToggle").classList.toggle("on", stockToggleState);
 
   const categories = state.categories && state.categories.length ? state.categories : DEFAULT_CATEGORIES;
@@ -1736,32 +2194,92 @@ function openProductModal(product){
     `<option value="${escapeHtml(c)}" ${c === currentCat ? 'selected' : ''}>${escapeHtml(c)}</option>`
   ).join("");
 
-  const imgKeys = Object.keys(IMAGES).filter(k => k !== "logo");
-  const productHasCustomImage = product && product.image && product.image.startsWith("data:");
-  const selectedKey = product && !productHasCustomImage ? product.image : null;
+  // Cargar imágenes existentes del producto
+  if(product){
+    uploadedImages = product.images
+      ? [...product.images]
+      : (product.image ? [product.image] : []);
+  }
 
-  renderImageOptions(imgKeys, selectedKey, productHasCustomImage ? product.image : null);
+  // Si no tiene imágenes guardadas, pre-seleccionar la primera predefinida
+  if(uploadedImages.length === 0){
+    const firstKey = Object.keys(IMAGES).find(k => k !== "logo");
+    if(firstKey) uploadedImages = [firstKey];
+  }
 
+  renderImageGrid();
   document.getElementById("productOverlay").classList.add("show");
 }
 
-function renderImageOptions(imgKeys, selectedKey, customDataUrl){
-  let html = imgKeys.map(k => `
-    <img src="${IMAGES[k]}" data-key="${k}" class="${k===selectedKey ? 'selected':''}">
-  `).join("");
+function renderImageGrid(){
+  const imgKeys = Object.keys(IMAGES).filter(k => k !== "logo");
+  const MAX = 4;
 
-  if(customDataUrl){
-    html += `<img src="${customDataUrl}" data-key="${customDataUrl}" class="selected" data-custom="1">`;
+  // Sección de imágenes actuales del producto (array uploadedImages)
+  let currentHtml = uploadedImages.map((key, i) => {
+    const src = resolveImage(key);
+    return `
+      <div class="multi-img-item" data-idx="${i}">
+        <img src="${src}" alt="">
+        ${i===0 ? '<span class="multi-img-badge">Principal</span>' : ''}
+        <button class="multi-img-remove" data-idx="${i}" title="Quitar">${ICONS.close}</button>
+      </div>`;
+  }).join("");
+
+  if(uploadedImages.length < MAX){
+    currentHtml += `
+      <div class="multi-img-add" id="triggerPickImg" title="Añadir foto">
+        ${ICONS.plus}
+      </div>`;
   }
 
-  document.getElementById("imageOptions").innerHTML = html;
+  // Sección de fotos predefinidas para elegir
+  const presetHtml = imgKeys.map(k => `
+    <img src="${IMAGES[k]}" data-key="${k}" class="preset-thumb ${uploadedImages.includes(k)?'used':''}" title="${k}">
+  `).join("");
 
-  document.querySelectorAll("#imageOptions img").forEach(img=>{
-    img.addEventListener("click", ()=>{
-      document.querySelectorAll("#imageOptions img").forEach(i=>i.classList.remove("selected"));
-      img.classList.add("selected");
+  document.getElementById("imageOptions").innerHTML = `
+    <div class="multi-img-grid" id="multiImgGrid">${currentHtml}</div>
+    <p style="font-size:11px;color:var(--ink-dim);margin:8px 0 6px;">
+      ${uploadedImages.length < MAX ? `Puedes añadir hasta ${MAX} fotos. ` : 'Máximo de fotos alcanzado. '}
+      Haz click en las fotos de abajo para agregarlas, o sube una nueva.
+    </p>
+    <div class="preset-thumbs-row" id="presetThumbsRow">${presetHtml}</div>
+  `;
+
+  // Bindings de la cuadrícula actual
+  document.querySelectorAll('.multi-img-remove').forEach(btn=>{
+    btn.addEventListener("click", (e)=>{
+      e.stopPropagation();
+      const idx = parseInt(btn.getAttribute("data-idx"));
+      uploadedImages.splice(idx, 1);
+      renderImageGrid();
     });
   });
+
+  const addBtn = document.getElementById("triggerPickImg");
+  if(addBtn) addBtn.addEventListener("click", ()=> document.getElementById("fileInput").click());
+
+  // Click en fotos predefinidas
+  document.querySelectorAll('.preset-thumb').forEach(img=>{
+    img.addEventListener("click", ()=>{
+      const key = img.getAttribute("data-key");
+      if(uploadedImages.includes(key)){
+        uploadedImages = uploadedImages.filter(k=>k!==key);
+      }else if(uploadedImages.length < MAX){
+        uploadedImages.push(key);
+      }else{
+        showToast(`Máximo ${MAX} fotos por prenda`);
+        return;
+      }
+      renderImageGrid();
+    });
+  });
+}
+
+function renderImageOptions(imgKeys, selectedKey, customDataUrl){
+  // Fallback legacy — ya no se usa directamente pero lo mantengo por compatibilidad
+  renderImageGrid();
 }
 
 /* ============================================================
@@ -1849,9 +2367,18 @@ function render(){
       const fresh = snap.val();
       if(getRouteFromHash() === "owner" && state.authed) return;
       if(fresh !== null && fresh !== undefined && fresh !== state.announcement){
-        state.announcement = fresh;
-        render();
+        state.announcement = fresh; render();
       }
+    });
+    db.ref(TERMS_KEY).on("value", (snap)=>{
+      const fresh = snap.val();
+      if(getRouteFromHash() === "owner" && state.authed) return;
+      if(fresh && fresh !== state.terms){ state.terms = fresh; render(); }
+    });
+    db.ref(ABOUT_KEY).on("value", (snap)=>{
+      const fresh = snap.val();
+      if(getRouteFromHash() === "owner" && state.authed) return;
+      if(fresh && fresh !== state.about){ state.about = fresh; render(); }
     });
   }
 })();
